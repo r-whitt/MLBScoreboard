@@ -1,0 +1,17 @@
+When using the Date Picker to Select, make sure there are leading 0s before creating the URL
+	Currently it is error because the URL is wrong
+		Good: 
+			http://gd2.mlb.com/components/game/mlb/year_2017/month_08/day_09/master_scoreboard.json
+		Bad: 
+			gd2.mlb.com/components/game/mlb/year_2017/month_8/day_9/master_scoreboard.json
+
+Date Picker currently doesn't show 1st week if it showed on the previous Month
+
+Create movable innings for extra innings above 10
+	Currently should be 10 columns
+		9 for the innings & 1 empty for spacing between innings & summar
+		and 1 leading beore Teams & Innings
+	Should: 
+		Use empty column between Teams & inning to hold the buttons to show different innings
+		Then use the last empty column before the summary to show a 10th inning
+		The buttons should only appear if there are more than 10 innings
