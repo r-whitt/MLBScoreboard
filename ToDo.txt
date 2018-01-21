@@ -15,3 +15,12 @@ Create movable innings for extra innings above 10
 		Use empty column between Teams & inning to hold the buttons to show different innings
 		Then use the last empty column before the summary to show a 10th inning
 		The buttons should only appear if there are more than 10 innings
+
+
+
+
+
+Should We?
+	Should we show the scores in 2 columns 
+	OR
+	Add more information to the right of the scores like Pitchers, HRs, clips? 
