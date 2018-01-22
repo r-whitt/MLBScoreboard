@@ -5,13 +5,16 @@
 		<div v-for="filteredMessage in getterTest">{{ filteredMessage.message }}</div>
 		-->
 		<div class="container-fluid">
+			<!--To see current Date
 			<div class="row">
 			<div v-model="getDate"><label>Current Date:</label>   {{ storeDates.month }} / {{ storeDates.day }} / {{ storeDates.year }}</div>
 			</div>
+			--> 
 			<div class="container-fluid">
 				<datePicker class="row"></datePicker>
 			</div>
 		</div>
+		<!--Used to test w/o Date Picker
 		<div class="row">
 			<div class="col-sm-3" align="left">
 				<label>Month</label>
@@ -26,6 +29,7 @@
 		</div>
 		<button class="bt btn-xs btn-danger" @click="save">Save</button>
 		<button class="bt btn-xs btn-primary" @click="getStoreMutations">Get Scores!</button>
+		-->
 		<div v-for="score in updateStoreScoreboard">
 			<div class="row">
 				<div class="col">
