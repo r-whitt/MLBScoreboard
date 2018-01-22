@@ -83,8 +83,12 @@ var scores = {
 		},
 		updateDatePicker (store, timeObject) {
 			scores.state.dateObject.year = timeObject.getFullYear();
-			scores.state.dateObject.month = timeObject.getMonth() + 1;
-			scores.state.dateObject.day = timeObject.getDate();
+			var tempMonth = timeObject.getMonth() + 1;
+			var tempDay = timeObject.getDate();
+			scores.state.dateObject.month = tempMonth > 9 ? tempMonth : "".concat(0, tempMonth)
+			console.log("Month is: " + scores.state.dateObject.month + "TempDay is: " + tempDay)
+			scores.state.dateObject.day = tempDay > 9 ? tempDay : "".concat(0, tempDay)
+			console.log("Day is: " + scores.state.dateObject.day + "tempDay is: " + tempDay)
 			console.log("Store date: " + scores.state.dateObject.month + "\ " + scores.state.dateObject.day + "\ " + scores.state.dateObject.year)
 			console.log("datePicker about to fetch new scores")
 			scores.mutations.updateScoreboardNew()
