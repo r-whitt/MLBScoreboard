@@ -99,7 +99,7 @@
                 var time = new Date(this.now);
                 time.setMonth(time.getMonth(), 1);           // the first day
                 var curFirstDay = time.getDay();
-                curFirstDay === 0 && (curFirstDay = 7);
+                curFirstDay === 0 && (curFirstDay = 1);
                 time.setDate(0);                             // the last day
                 var lastDayCount = time.getDate();
                 for (let i = curFirstDay; i > 0; i--) {
@@ -247,7 +247,7 @@
     color: #3bb4f2;
 }
 .datetime-picker .date-head {
-    background-color: #3bb4f2;
+    background-color: #221faf;
     text-align: center;
     color: #fff;
     font-size: 14px;
