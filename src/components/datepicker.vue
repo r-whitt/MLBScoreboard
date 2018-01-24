@@ -97,10 +97,10 @@
             update () {
                 var arr = [];
                 var time = new Date(this.now);
-                time.setMonth(time.getMonth(), 1);           // the first day
+                time.setMonth(time.getMonth(), 0);           // the first day
                 var curFirstDay = time.getDay();
-                curFirstDay === 0 && (curFirstDay = 1);
-                time.setDate(0);                             // the last day
+                curFirstDay === 0 && (curFirstDay = 0);
+                time.setDate(0);                            // the last day
                 var lastDayCount = time.getDate();
                 for (let i = curFirstDay; i > 0; i--) {
                     arr.push({
@@ -109,9 +109,11 @@
                         status: 'date-pass'
                     });
                 }
-                time.setMonth(time.getMonth() + 2, 0);       // the last day of this month
+                time.setMonth(time.getMonth() + 2, 0); 
+                console.log("time: " + time)      // the last day of this month
                 var curDayCount = time.getDate();
-                time.setDate(1);                             // fix bug when month change
+                console.log("time2: " + curDayCount)
+                time.setDate(1);                           // fix bug when month change
                 var value = this.value || this.stringify(new Date());
                 for (let i = 0; i < curDayCount; i++) {
                     let tmpTime = new Date(time.getFullYear(), time.getMonth(), i + 1);
@@ -127,7 +129,7 @@
                 while (arr.length < 42) {
                     arr.push({
                         text: j,
-                        time: new Date(time.getFullYear(), time.getMonth() + 1, j),
+                        time: new Date(time.getFullYear(), time.getMonth(), j),
                         status: 'date-future'
                     });
                     j++;

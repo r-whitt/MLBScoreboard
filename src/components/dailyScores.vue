@@ -11,7 +11,7 @@
 			</div>
 			--> 
 			<div class="container-fluid">
-				<datePicker class="row"></datePicker>
+				<datePicker placeholder="Select Date" v-model="storeDates.date" v-on:selected="dateSelected"></datePicker>
 			</div>
 		</div>
 		<!--Used to test w/o Date Picker
@@ -107,22 +107,27 @@
 
 <script>
 	import store from '../store.js'
-	import datePicker from './datepicker.vue'
+	import datePicker1 from './datepicker.vue'
+	import datePicker from 'vuejs-datepicker';
 
 	export default {
 		name: 'dailyScores',
 		components: {
-    		datePicker
+			datePicker,
+			datePicker1
   		},
 		data () {
 			var updateDailyScore = []
 			var length = 0
 			var tempYear = {
-				year: "", 
-				month: "",
-				day: ""
+				year: "2017", 
+				month: "07",
+				day: "15"
 			}
 			var storeDates = {
+				date: new Date(2017, 6, 10)
+			}
+			var storeDates1 = {
 				year: "", 
 				month: "",
 				day: ""
@@ -154,6 +159,9 @@
 				store.commit('updateScores', "2017", "07", "15")
 			}
 			*/
+			dateSelected (date) {
+				console.log("datepicker: " + Number(date.getMonth()+1))
+			},
 			getStoreMutations () {
 				store.commit('updateScoreboardNew')
 			},
