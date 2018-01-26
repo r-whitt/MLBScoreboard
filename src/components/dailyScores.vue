@@ -1,9 +1,5 @@
-
 <template>
 	<div>
-		<!-- Store Getter Test
-		<div v-for="filteredMessage in getterTest">{{ filteredMessage.message }}</div>
-		-->
 		<div class="container-fluid">
 			<!--To see current Date
 			<div class="row">
@@ -11,7 +7,7 @@
 			</div>
 			--> 
 			<div class="container-fluid">
-				<datePicker placeholder="Select Date" v-model="storeDates.date" v-on:selected="dateSelected"></datePicker>
+				<datePicker placeholder="Select Date" v-model="storeDates.date" v-on:closed="save"></datePicker>
 			</div>
 		</div>
 		<!--Used to test w/o Date Picker
@@ -33,8 +29,6 @@
 		<div v-for="score in updateStoreScoreboard">
 			<div class="row">
 				<div class="col">
-			<!--<div>{{ score.game.home_team_name}}</div>-->
-			<!--<div>{{ score.home_team_name }}</div> -->
 					<!-- To Center the scores -->
 					<div class="col-sm-3"></div>
 					<div id="divTable" class="container col-sm-4" >
@@ -58,7 +52,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- Away Team line -->
+								<!-- Away Team Line -->
 								<!-- for Inning cound, can use the td for tr and v-fro a paginated table? -->
 								<tr id="tableRow" height="31px">
 									<td width="140px">
@@ -74,6 +68,7 @@
 									<td id="summary">{{ score.linescore.h.away }}</td>
 									<td id="summary">{{ score.linescore.e.away }}</td>
 								</tr>
+								<!-- Home Team Line --> 
 								<tr id="tableRow" height="31px">
 									<td width="140px">
 										<b id="teamName">{{ score.home_team_name }}</b>
@@ -154,22 +149,15 @@
 			}
 		},
 		methods: {
-			/*
-			getScores() {
-				store.commit('updateScores', "2017", "07", "15")
-			}
-			*/
-			dateSelected (date) {
-				console.log("datepicker: " + Number(date.getMonth()+1))
-			},
 			getStoreMutations () {
 				store.commit('updateScoreboardNew')
 			},
 			save (date) {
-				console.log("save started")
+				console.log("save started ")
 				//Updating store with the new date
-				store.commit('updateDate', this.tempYear)
-				console.log("Year: " + this.tempYear.year)
+				//store.commit('updateDate', this.storeDates.date) -- for use w/o date picker
+				store.commit('updateDatePicker', this.storeDates.date)
+				console.log("Sending to Store: " + this.storeDates.date)
 				console.log("store: " + store.state.score.dateObject.year)
 			},
 			winner(score) {
@@ -192,9 +180,6 @@
 
 						this.previousRequest = request;
 					}
-
-					//responseType: 'json'
-
 				}).then(response => {
 					//success
 					console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))

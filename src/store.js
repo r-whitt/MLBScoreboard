@@ -56,6 +56,7 @@ var scores = {
 			scores.state.message += message
 		},
 		updateScoreboardNew (store) {
+			//Uses the new date to configure URL and update api call for scoreboard
 			var url = ("http://gd2.mlb.com/components/game/mlb/year_" + scores.state.dateObject.year + "/month_" + scores.state.dateObject.month + "/day_" + scores.state.dateObject.day + "/master_scoreboard.json")
 			console.log("URL is: " + url) 
 			var previousRequest = ""
@@ -78,25 +79,24 @@ var scores = {
 				console.log("vue resource had an error: " + url + "\n" + "response is: " + response)
 			})
 		},
-		updateScoreboard2 (store) {
-
-		},
 		updateDatePicker (store, timeObject) {
+			//Used with the Datepicker v:on=closed
 			scores.state.dateObject.year = timeObject.getFullYear();
 			var tempMonth = timeObject.getMonth() + 1;
 			var tempDay = timeObject.getDate();
 			scores.state.dateObject.month = tempMonth > 9 ? tempMonth : "".concat(0, tempMonth)
-			console.log("Month is: " + scores.state.dateObject.month + "TempDay is: " + tempDay)
+			//console.log("Month is: " + scores.state.dateObject.month + "TempDay is: " + tempDay)
 			scores.state.dateObject.day = tempDay > 9 ? tempDay : "".concat(0, tempDay)
-			console.log("Day is: " + scores.state.dateObject.day + "tempDay is: " + tempDay)
-			console.log("Store date: " + scores.state.dateObject.month + "\ " + scores.state.dateObject.day + "\ " + scores.state.dateObject.year)
-			console.log("datePicker about to fetch new scores")
+			//console.log("Day is: " + scores.state.dateObject.day + "tempDay is: " + tempDay)
+			//console.log("Store date: " + scores.state.dateObject.month + "\ " + scores.state.dateObject.day + "\ " + scores.state.dateObject.year)
+			//console.log("datePicker about to fetch new scores")
 			scores.mutations.updateScoreboardNew()
 		},
 		updateDate(store, timeObject) {
-			scores.state.dateObject.year = timeObject.year,
-			scores.state.dateObject.month = timeObject.month,
-			scores.state.dateObject.day = timeObject.day
+			//Used with no datepicker (save button)
+			scores.state.dateObject.year = timeObject.getFullYear(),
+			scores.state.dateObject.month = timeObject.getMonth() + 1,
+			scores.state.dateObject.day = timeObject.getDate()
 		}
 	}
 }
