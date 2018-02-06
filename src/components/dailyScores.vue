@@ -7,7 +7,16 @@
 			</div>
 			--> 
 			<div class="container-fluid">
-				<datePicker placeholder="Select Date" v-model="storeDates.date" v-on:closed="save"></datePicker>
+				<div class="row">
+					<div class="col-md-4">
+						<datePicker placeholder="Select Date" v-model="storeDates.date" v-on:closed="save"></datePicker>
+					</div>
+					<div id="longDate" class="col-md-4" v-model="getDate">
+						<label>{{ storeDates.date.toLocaleString("en-us", { month: "long" }) }}</label>
+						<label> {{ storeDates.date.getDate() }}, </label>
+						<label>{{ storeDates.date.getFullYear() }}</label>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!--Used to test w/o Date Picker
@@ -142,9 +151,11 @@
 				return store.getters.messageFilter
 			},
 			getDate() {
+				/*
 				this.storeDates.year = store.state.score.dateObject.year
 				this.storeDates.month = store.state.score.dateObject.month
 				this.storeDates.day = store.state.score.dateObject.day
+				*/
 				return this.storeDates
 			}
 		},
@@ -249,5 +260,10 @@
 	}
 	#tableHead {
 		background-color: white;
+	}
+	#longDate {
+		font-size: 35px;
+		font-family:  "Trebuchet MS";
+		
 	}
 </style>
