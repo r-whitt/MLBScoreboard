@@ -1,6 +1,11 @@
 <template>
 	<div>
 		<div class="container-fluid">
+			<!--To see current Date
+			<div class="row">
+			<div v-model="getDate"><label>Current Date:</label>   {{ storeDates.month }} / {{ storeDates.day }} / {{ storeDates.year }}</div>
+			</div>
+			--> 
 			<!-- Date Picker & Date Header --> 
 			<div class="container-fluid">
 				<div class="row">
@@ -98,6 +103,13 @@
 							</tbody>
 						</table>
 					</div>
+					<!--
+					<div id="scoreSummary" class="d-block col-sm-2 center">
+						{{ score.away_team_name }}
+						<br>
+						{{score.home_team_name}}
+					</div>
+					-->
 				</div>
 			</div>
 		</div>
@@ -198,16 +210,11 @@
 				})
 			},
 			scoreCheck(inning) {
-				console.log("scoreCheck: " + inning.length)
 				if(inning){
 					return inning
 				} else {
 					return "X"
 				}
-			},
-
-			scoreCheck2(inning) {
-
 			}
 		},
 		beforeMount () {
