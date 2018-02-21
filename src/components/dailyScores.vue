@@ -107,7 +107,10 @@
 							<thead id="tableHead">
 								<tr id="tableRow">
 									<!-- Extra column for buttons -->
-									<th></th>
+									<th>
+										<i style="color:blue" class="glyphicon glyphicon-chevron-left"></i>
+										<i style="color:blue" class="glyphicon glyphicon-chevron-right"></i>
+									</th>
 									<th id="inning" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && getAwayEndIndex(score.away_team_name)" colspan="9">{{ index + 1 }}</th>
 								</tr>
 							</thead>
