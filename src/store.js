@@ -143,17 +143,17 @@ var teamInfo = {
 			teamInfo.state.teamArray[teamObject.homeTeamIndex].startingIndex = teamObject.startIndex
 			teamInfo.state.teamArray[teamObject.homeTeamIndex].endingIndex = teamObject.endingIndex
 		},
-		showLateInning(store, team2Object) {
-			teamInfo.state.teamArray[team2Object.awayTeamIndex].startingIndex = +1
-			teamInfo.state.teamArray[team2Object.awayTeamIndex].endingIndex = +1
-			teamInfo.state.teamArray[team2Object.homeTeamIndex].startingIndex = +1
-			teamInfo.state.teamArray[team2Object.homeTeamIndex].endingIndex = +1
+		showLateInning(store, teamIndex2Obj) {
+			teamInfo.state.teamArray[teamIndex2Obj.awayTeamIndex].startingIndex = +1
+			teamInfo.state.teamArray[teamIndex2Obj.awayTeamIndex].endingIndex = +1
+			teamInfo.state.teamArray[teamIndex2Obj.homeTeamIndex].startingIndex = +1
+			teamInfo.state.teamArray[teamIndex2Obj.homeTeamIndex].endingIndex = +1
 		},
 		showEarlyInning(store, team3Object) {
-			teamInfo.state.teamArray[team2Object.awayTeamIndex].startingIndex = -1
-			teamInfo.state.teamArray[team2Object.awayTeamIndex].endingIndex = -1
-			teamInfo.state.teamArray[team2Object.homeTeamIndex].startingIndex = -1
-			teamInfo.state.teamArray[team2Object.homeTeamIndex].endingIndex = -1
+			teamInfo.state.teamArray[team3Object.awayTeamIndex].startingIndex = -1
+			teamInfo.state.teamArray[team3Object.awayTeamIndex].endingIndex = -1
+			teamInfo.state.teamArray[team3Object.homeTeamIndex].startingIndex = -1
+			teamInfo.state.teamArray[team3Object.homeTeamIndex].endingIndex = -1
 		}
 	}
 }

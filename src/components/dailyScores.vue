@@ -44,7 +44,7 @@
 								<tr id="tableRow">
 									<th width="180px">
 										<!-- Status of game - 'final', 'f/10', canceled, etc -->
-										<div id="gameStatus" v-if="score.status.inning > 9">
+										<div colspan="1" id="gameStatus" v-if="score.status.inning > 9">
 											<span v-if="score.status.inning > 9">F/{{ score.status.inning }}</span>
 										</div>
 										<div v-else>
@@ -76,25 +76,25 @@
 						</table>
 					</div>
 
-					<div id="divTable" class="container col-sm-4" style="margin-left:-10px">
+					<div id="divTable" class="container col-sm-2" style="margin-left:-10px">
 						<!-- Innings for < 11 Innigs --> 
 						<table v-if="score.status.inning < 11" id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
 								<tr id="tableRow">
 									<th></th>
-									<th id="inning" v-for="(inning, index) in score.linescore.inning" colspan="9">{{ index + 1 }}</th>
+									<th id="inning" v-for="(inning, index) in score.linescore.inning">{{ index + 1 }}</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr id="tableRow" height="55px">
 									<td></td>
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" colspan="9">
+									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning">
 										{{ inning.away }}
 									</td>
 								</tr>
 								<tr id="tableRow" height="55px">
 									<td></td>
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" colspan="9">
+									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning">
 										<div v-if="inning.home.length == 0">X</div>
 										<div v-else>{{ inning.home }}</div>
 									</td>
@@ -108,22 +108,24 @@
 								<tr id="tableRow">
 									<!-- Extra column for buttons -->
 									<th>
-										<i style="color:blue" class="glyphicon glyphicon-chevron-left"></i>
-										<i style="color:blue" class="glyphicon glyphicon-chevron-right"></i>
+										<a @click="showEarlierInning(score.away_team_name, score.home_team_name)"><i style="color:black" class="glyphicon glyphicon-chevron-left"></i></a>
 									</th>
-									<th id="inning" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && getAwayEndIndex(score.away_team_name)" colspan="9">{{ index + 1 }}</th>
+									<th>
+										<i style="color:black" class="glyphicon glyphicon-chevron-right"></i>
+									</th>
+									<th id="inning" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && getAwayEndIndex(score.away_team_name)">{{ index + 1 }}</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr id="tableRow" height="55px">
 									<td></td>
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && getAwayEndIndex(score.away_team_name)" colspan="9">
+									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && getAwayEndIndex(score.away_team_name)">
 										{{ inning.away }}
 									</td>
 								</tr>
 								<tr id="tableRow" height="55px">
 									<td></td>
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getHomeStartIndex(score.home_team_name) && getHomeEndIndex(score.home_team_name)"colspan="9">
+									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getHomeStartIndex(score.home_team_name) && getHomeEndIndex(score.home_team_name)">
 										<div v-if="inning.home.length == 0">X</div>
 										<div v-else>{{ inning.home }}</div>
 									</td>
@@ -256,6 +258,7 @@
 					"awayTeamIndex": awayTeamIndex3,
 					"homeTeamIndex": homeTeamIndex3
 				}
+				console.log("click Registered")
 				store.commit('showEarlyInning', teamIndex3Obj)
 			},
 			getAwayStartIndex(away) {
