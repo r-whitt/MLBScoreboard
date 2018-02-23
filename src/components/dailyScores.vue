@@ -37,7 +37,7 @@
 					<!-- To Center the scores -->
 					<div class="col-sm-3"></div>
 						<!-- ADD CAUSE FOR NO GAMES HERE --> 
-					<div id="divTable" class="container col-sm-1" style="margin-right:-20px">
+					<div id="divTable" class="container col-md-1" style="margin-right:-50px">
 						<!-- Team Names, record, etc -->
 						<table id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
@@ -56,7 +56,7 @@
 							</thead>
 							<tbody>
 								<tr id="tableRow" height="31px">
-									<td width="140px">
+									<td margin-right="50px" width="120px">
 									<!-- Away team Name & record -->
 										<b id="teamName">{{ score.away_team_name }}</b>
 										<br>
@@ -65,7 +65,7 @@
 								</tr>
 								<tr id="tableRow" height="31px">
 									<!-- Home Team Name & Record --> 
-									<td width="140px">
+									<td width="120px">
 										<!-- Home Team name & record -->
 										<b id="teamName">{{ score.home_team_name }}</b>
 										<div id="winLossRecord">({{ score.home_win }} - {{ score.home_loss }})</div>
@@ -110,7 +110,7 @@
 									<th>
 										<a @click="showEarlierInning(score.away_team_name, score.home_team_name)"><i style="color:black" class="glyphicon glyphicon-chevron-left"></i></a>
 									</th>
-									<th>
+									<th style="margin-left:-20px">
 										<i style="color:black" class="glyphicon glyphicon-chevron-right"></i>
 									</th>
 									<th id="inning" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && getAwayEndIndex(score.away_team_name)">{{ index + 1 }}</th>
