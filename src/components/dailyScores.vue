@@ -107,12 +107,14 @@
 							<thead id="tableHead">
 								<tr id="tableRow">
 								<!-- Extra column for buttons -->
-								<th>
+								<th v-if="showLeftArrow(score.away_team_name)">
 									<a style="margin-left:-40px" @click="showEarlierInning(score.away_team_name, score.home_team_name)"><i style="color:black" class="glyphicon glyphicon-chevron-left small"></i></a>
 								</th>
-								<th>
+								<th v-else></th>
+								<th v-if="showRightArrow(score.status.inning, score.away_team_name)">
 									<a style="margin-left:-40px" @click="showLaterInning(score.away_team_name, score.home_team_name)"><i style="color:black" class="glyphicon glyphicon-chevron-right small"></i></a>
 								</th>
+								<th v-else></th>
 								<!--<th v-else></th> -->
 								<th id="inning" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && index <= getAwayEndIndex(score.away_team_name)"><div style="margin-left:-30px">{{ index + 1 }}</div></th>
 							</tr>								
@@ -294,6 +296,20 @@
 			getHomeStartIndex(home) {
 				var homeTeamIndex2 = store.state.team.teamArray.findIndex(team => team.name === home)
 				return store.state.team.teamArray[homeTeamIndex2].startingIndex
+			},
+			showRightArrow(score, away) {
+				//console.log("showRightArrow: " + score)
+				var awayArrowIndex = store.state.team.teamArray.findIndex(team => team.name === away)
+				var showRight = store.state.team.teamArray[awayArrowIndex].endingIndex < (score-1)
+				//console.log("showRightArrow: " + showRight)
+				return showRight
+			},
+			showLeftArrow(away) {
+				var awayArrowIndex2 = store.state.team.teamArray.findIndex(team => team.name === away)
+				var showLeft = !(store.state.team.teamArray[awayArrowIndex2].startingIndex == -1)
+				//console.log("showLeftArrow: " + showLeft)
+				//console.log("showLeftArrowStartingIndex: " + store.state.team.teamArray[awayArrowIndex2].startingIndex)
+				return showLeft
 			},
 			save (date) {
 				console.log("save started ")
