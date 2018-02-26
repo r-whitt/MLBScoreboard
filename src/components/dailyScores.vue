@@ -106,29 +106,32 @@
 						<table v-else-if="score.status.inning > 10" v-bind="updateTeamInningRange(score.away_team_name, score.home_team_name, score.status.inning)"  id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
 								<tr id="tableRow">
-									<!-- Extra column for buttons -->
-									<th>
-										<a @click="showEarlierInning(score.away_team_name, score.home_team_name)"><i style="color:black" class="glyphicon glyphicon-chevron-left"></i></a>
-									</th>
-									<th style="margin-left:-20px">
-										<i style="color:black" class="glyphicon glyphicon-chevron-right"></i>
-									</th>
-									<th id="inning" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && getAwayEndIndex(score.away_team_name)">{{ index + 1 }}</th>
-								</tr>
+								<!-- Extra column for buttons -->
+								<th>
+									<a style="margin-left:-40px" @click="showEarlierInning(score.away_team_name, score.home_team_name)"><i style="color:black" class="glyphicon glyphicon-chevron-left small"></i></a>
+								</th>
+								<th>
+									<a style="margin-left:-40px" @click="showLaterInning(score.away_team_name, score.home_team_name)"><i style="color:black" class="glyphicon glyphicon-chevron-right small"></i></a>
+								</th>
+								<!--<th v-else></th> -->
+								<th id="inning" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && index <= getAwayEndIndex(score.away_team_name)"><div style="margin-left:-30px">{{ index + 1 }}</div></th>
+							</tr>								
 							</thead>
 							<tbody>
 								<tr id="tableRow" height="55px">
 									<td></td>
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && getAwayEndIndex(score.away_team_name)">
+									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && index <= getAwayEndIndex(score.away_team_name)">
 										{{ inning.away }}
 									</td>
+									<td></td>
 								</tr>
 								<tr id="tableRow" height="55px">
 									<td></td>
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getHomeStartIndex(score.home_team_name) && getHomeEndIndex(score.home_team_name)">
+									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getHomeStartIndex(score.home_team_name) && index <= getHomeEndIndex(score.home_team_name)">
 										<div v-if="inning.home.length == 0">X</div>
 										<div v-else>{{ inning.home }}</div>
 									</td>
+									<td></td>
 								</tr>
 							</tbody>
 						</table>
@@ -229,17 +232,32 @@
 			getStoreMutations () {
 				store.commit('updateScoreboardNew')
 			},
+			findStartingIndex() {
+
+			},
 			updateTeamInningRange (away, home, inning) {
 				var awayTeamIndex = store.state.team.teamArray.findIndex(team => team.name === away)
 				var homeTeamIndex = store.state.team.teamArray.findIndex(team => team.name === home)
-				var endingIndex = inning - 1
-				var startIndex = inning - 10
-				var teamIndexObj = {
+				console.log("Starting check: " + store.state.team.teamArray[awayTeamIndex].starting)
+				if (store.state.team.teamArray[awayTeamIndex].starting == true) {
+					console.log("starting was true")
+					var endingIndex = inning - 1
+					var startIndex = inning - 10
+					store.state.team.teamArray[awayTeamIndex].starting = false
+					var teamIndexObj = {
 					"awayTeamIndex": awayTeamIndex,
 					"homeTeamIndex": homeTeamIndex,
 					"startIndex": startIndex,
 					"endingIndex": endingIndex
+					}
+				} else {
+					var teamIndexObj = {
+						"awayTeamIndex": awayTeamIndex,
+						"homeTeamIndex": homeTeamIndex
+					}
 				}
+				console.log("updateTeam going to store: " + JSON.stringify(teamIndexObj))
+				console.log("starting value " + store.state.team.teamArray[awayTeamIndex].starting)
 				store.commit('updateTeamIndex', teamIndexObj)
 			},
 			showLaterInning (away, home) {
@@ -258,7 +276,7 @@
 					"awayTeamIndex": awayTeamIndex3,
 					"homeTeamIndex": homeTeamIndex3
 				}
-				console.log("click Registered")
+				console.log("click Registered " + JSON.stringify(teamIndex3Obj))
 				store.commit('showEarlyInning', teamIndex3Obj)
 			},
 			getAwayStartIndex(away) {

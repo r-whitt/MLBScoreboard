@@ -104,56 +104,63 @@ var scores = {
 var teamInfo = {
 	state: {
 		teamArray: [
-			{ "name": "Yankees", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Red Sox", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Blue Jays", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Tigers", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Cubs", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Orioles", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Cardinals", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Pirates", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "D-backs", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Braves", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Rockies", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Mets", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Dodgers", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Marlins", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Twins", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Astros", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Phillies", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Brewers", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Mariners", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "White Sox", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Nationals", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Reds", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Rangers", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Royals", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Giants", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Padres", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Indians", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Athletics", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Rays", "startingIndex": 0, "endingIndex": 9 },
-			{ "name": "Angels", "startingIndex": 0, "endingIndex": 9 }
+			{ "name": "Yankees", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Red Sox", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Blue Jays", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Tigers", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Cubs", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Orioles", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Cardinals", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Pirates", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "D-backs", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Braves", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Rockies", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Mets", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Dodgers", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Marlins", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Twins", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Astros", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Phillies", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Brewers", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Mariners", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "White Sox", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Nationals", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Reds", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Rangers", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Royals", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Giants", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Padres", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Indians", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Athletics", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Rays", "startingIndex": 0, "endingIndex": 9, "starting": true },
+			{ "name": "Angels", "startingIndex": 0, "endingIndex": 9, "starting": true }
 		]
 	},
 	mutations: {
 		updateTeamIndex(store, teamObject) {
-			teamInfo.state.teamArray[teamObject.awayTeamIndex].startingIndex = teamObject.startIndex
-			teamInfo.state.teamArray[teamObject.awayTeamIndex].endingIndex = teamObject.endingIndex
-			teamInfo.state.teamArray[teamObject.homeTeamIndex].startingIndex = teamObject.startIndex
-			teamInfo.state.teamArray[teamObject.homeTeamIndex].endingIndex = teamObject.endingIndex
+			console.log("store updateTeamIndex")
+			if(teamObject.hasOwnProperty('startIndex')) {
+				console.log("store updateTeam was started")
+				teamInfo.state.teamArray[teamObject.awayTeamIndex].startingIndex = teamObject.startIndex
+				teamInfo.state.teamArray[teamObject.awayTeamIndex].endingIndex = teamObject.endingIndex
+				teamInfo.state.teamArray[teamObject.homeTeamIndex].startingIndex = teamObject.startIndex
+				teamInfo.state.teamArray[teamObject.homeTeamIndex].endingIndex = teamObject.endingIndex
+			}
+			console.log("store updateTeamIndex away startingIndex " + teamInfo.state.teamArray[teamObject.awayTeamIndex].startingIndex);
 		},
 		showLateInning(store, teamIndex2Obj) {
-			teamInfo.state.teamArray[teamIndex2Obj.awayTeamIndex].startingIndex = +1
-			teamInfo.state.teamArray[teamIndex2Obj.awayTeamIndex].endingIndex = +1
-			teamInfo.state.teamArray[teamIndex2Obj.homeTeamIndex].startingIndex = +1
-			teamInfo.state.teamArray[teamIndex2Obj.homeTeamIndex].endingIndex = +1
+			teamInfo.state.teamArray[teamIndex2Obj.awayTeamIndex].startingIndex += 1
+			teamInfo.state.teamArray[teamIndex2Obj.awayTeamIndex].endingIndex += 1
+			teamInfo.state.teamArray[teamIndex2Obj.homeTeamIndex].startingIndex += 1
+			teamInfo.state.teamArray[teamIndex2Obj.homeTeamIndex].endingIndex += 1
 		},
 		showEarlyInning(store, team3Object) {
-			teamInfo.state.teamArray[team3Object.awayTeamIndex].startingIndex = -1
-			teamInfo.state.teamArray[team3Object.awayTeamIndex].endingIndex = -1
-			teamInfo.state.teamArray[team3Object.homeTeamIndex].startingIndex = -1
-			teamInfo.state.teamArray[team3Object.homeTeamIndex].endingIndex = -1
+			console.log("store Show Early " + JSON.stringify(team3Object))
+			teamInfo.state.teamArray[team3Object.awayTeamIndex].startingIndex -= 1
+			teamInfo.state.teamArray[team3Object.awayTeamIndex].endingIndex -= 1
+			teamInfo.state.teamArray[team3Object.homeTeamIndex].startingIndex -= 1
+			teamInfo.state.teamArray[team3Object.homeTeamIndex].endingIndex -= 1
+			console.log("store ShowEarly away/home startingIndex" + teamInfo.state.teamArray[team3Object.awayTeamIndex].startingIndex);
 		}
 	}
 }
