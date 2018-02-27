@@ -37,7 +37,7 @@
 					<!-- To Center the scores -->
 					<div class="col-sm-3"></div>
 						<!-- ADD CAUSE FOR NO GAMES HERE --> 
-					<div id="divTable" class="container col-md-1" style="margin-right:-50px">
+					<div id="divTable" class="container col-md-1" style="margin-right:-40px">
 						<!-- Team Names, record, etc -->
 						<table id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
@@ -48,7 +48,8 @@
 											<span v-if="score.status.inning > 9">F/{{ score.status.inning }}</span>
 										</div>
 										<div v-else>
-											<span id="gameStatus">{{ score.status.status }}</span>
+											<span v-if="score.status.status == 'Completed Early'" id="gameStatus">Weather</span>
+											<span v-else id="gameStatus">{{ score.status.status }}</span>
 										</div>
 										<!-- ADD CONDITION FOR SHORTNED/CANCELD GAMES-->
 									</th>
@@ -89,7 +90,8 @@
 								<tr id="tableRow" height="55px">
 									<td></td>
 									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning">
-										{{ inning.away }}
+										<div v-if="inning.away.length == 0">X</div>
+										<div v-else>{{ inning.away }}</div>
 									</td>
 								</tr>
 								<tr id="tableRow" height="55px">
@@ -218,9 +220,6 @@
 			updateTeamInfo () {
 				this.teamInfo = store.state.team.teamArray 
 			},
-			getterTest() {
-				return store.getters.messageFilter
-			},
 			getDate() {
 				/*
 				this.storeDates.year = store.state.score.dateObject.year
@@ -234,15 +233,10 @@
 			getStoreMutations () {
 				store.commit('updateScoreboardNew')
 			},
-			findStartingIndex() {
-
-			},
 			updateTeamInningRange (away, home, inning) {
 				var awayTeamIndex = store.state.team.teamArray.findIndex(team => team.name === away)
 				var homeTeamIndex = store.state.team.teamArray.findIndex(team => team.name === home)
-				console.log("Starting check: " + store.state.team.teamArray[awayTeamIndex].starting)
 				if (store.state.team.teamArray[awayTeamIndex].starting == true) {
-					console.log("starting was true")
 					var endingIndex = inning - 1
 					var startIndex = inning - 10
 					store.state.team.teamArray[awayTeamIndex].starting = false
@@ -258,8 +252,6 @@
 						"homeTeamIndex": homeTeamIndex
 					}
 				}
-				console.log("updateTeam going to store: " + JSON.stringify(teamIndexObj))
-				console.log("starting value " + store.state.team.teamArray[awayTeamIndex].starting)
 				store.commit('updateTeamIndex', teamIndexObj)
 			},
 			showLaterInning (away, home) {
@@ -278,7 +270,6 @@
 					"awayTeamIndex": awayTeamIndex3,
 					"homeTeamIndex": homeTeamIndex3
 				}
-				console.log("click Registered " + JSON.stringify(teamIndex3Obj))
 				store.commit('showEarlyInning', teamIndex3Obj)
 			},
 			getAwayStartIndex(away) {
@@ -312,55 +303,16 @@
 				return showLeft
 			},
 			save (date) {
-				console.log("save started ")
 				//Updating store with the new date
 				//store.commit('updateDate', this.storeDates.date) -- for use w/o date picker
 				store.commit('updateDatePicker', this.storeDates.date)
-				console.log("Sending to Store: " + this.storeDates.date)
-				console.log("store: " + store.state.score.dateObject.year)
+				//console.log("Sending to Store: " + this.storeDates.date)
+				//console.log("store: " + store.state.score.dateObject.year)
 			},
 			winner(score) {
 				if(score.linescore.r.home > score.linescore.r.away) {
 					return "win"
 				}
-			},
-			updateScoreboard () {
-				var year = "2017"
-				var month = "07"
-				var day = "15"
-				var url = ("http://gd2.mlb.com/components/game/mlb/year_" + year + "/month_" + month + "/day_" + day + "/master_scoreboard.json")
-				this.$http.get(url, {
-
-					before(request) {
-						if (this.previousRequest) {
-							this.previousRequest.abort();
-							console.log("Aborted previous request")
-						}
-
-						this.previousRequest = request;
-					}
-				}).then(response => {
-					//success
-					console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
-					this.updateDailyScore =response.body.data.games.game
-					length = updateDailyScore.length()
-					console.log("updateDailyScore length: " + updateDailyScore.length())
-				}, response => {
-					//error
-					console.log("vue resource had an error: " + url + "\n" + "response is: " + response)
-				})
-			},
-			scoreCheck(inning) {
-				//console.log("scoreCheck: " + inning.length)
-				if(inning){
-					return inning
-				} else {
-					return "X"
-				}
-			},
-
-			scoreCheck2(inning) {
-
 			}
 		},
 		beforeMount () {

@@ -67,16 +67,24 @@ var scores = {
 						console.log("ABORTED previous request")
 					}
 					previousRequest = JSON.stringify(request)
-					console.log("previousRequest: " + previousRequest.length)
+					//console.log("previousRequest: " + previousRequest.length)
 				}
 				
 			}).then(response => {
-				console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
+				console.log("url: " + url)
+				//console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
 				scores.state.dailyScores = response.body.data.games.game
 				//length = scores.state.dailyScores.length
-				console.log("Scores State dailyScores length: " + scores.state.dailyScores.length)
+				//console.log("Scores State dailyScores length: " + scores.state.dailyScores.length)
 			}, response => {
 				console.log("vue resource had an error: " + url + "\n" + "response is: " + response)
+			})
+		},
+		resetTeamIndexes () {
+			teamInfo.state.teamArray.forEach(function(element) {
+				element.startingIndex = 0;
+				element.endingIndex = 9;
+				element.starting = true;
 			})
 		},
 		updateDatePicker (store, timeObject) {
@@ -90,6 +98,7 @@ var scores = {
 			//console.log("Day is: " + scores.state.dateObject.day + "tempDay is: " + tempDay)
 			//console.log("Store date: " + scores.state.dateObject.month + "\ " + scores.state.dateObject.day + "\ " + scores.state.dateObject.year)
 			//console.log("datePicker about to fetch new scores")
+			scores.mutations.resetTeamIndexes()
 			scores.mutations.updateScoreboardNew()
 		},
 		updateDate(store, timeObject) {
@@ -138,15 +147,12 @@ var teamInfo = {
 	},
 	mutations: {
 		updateTeamIndex(store, teamObject) {
-			console.log("store updateTeamIndex")
 			if(teamObject.hasOwnProperty('startIndex')) {
-				console.log("store updateTeam was started")
 				teamInfo.state.teamArray[teamObject.awayTeamIndex].startingIndex = teamObject.startIndex
 				teamInfo.state.teamArray[teamObject.awayTeamIndex].endingIndex = teamObject.endingIndex
 				teamInfo.state.teamArray[teamObject.homeTeamIndex].startingIndex = teamObject.startIndex
 				teamInfo.state.teamArray[teamObject.homeTeamIndex].endingIndex = teamObject.endingIndex
 			}
-			console.log("store updateTeamIndex away startingIndex " + teamInfo.state.teamArray[teamObject.awayTeamIndex].startingIndex);
 		},
 		showLateInning(store, teamIndex2Obj) {
 			teamInfo.state.teamArray[teamIndex2Obj.awayTeamIndex].startingIndex += 1
@@ -155,12 +161,10 @@ var teamInfo = {
 			teamInfo.state.teamArray[teamIndex2Obj.homeTeamIndex].endingIndex += 1
 		},
 		showEarlyInning(store, team3Object) {
-			console.log("store Show Early " + JSON.stringify(team3Object))
 			teamInfo.state.teamArray[team3Object.awayTeamIndex].startingIndex -= 1
 			teamInfo.state.teamArray[team3Object.awayTeamIndex].endingIndex -= 1
 			teamInfo.state.teamArray[team3Object.homeTeamIndex].startingIndex -= 1
 			teamInfo.state.teamArray[team3Object.homeTeamIndex].endingIndex -= 1
-			console.log("store ShowEarly away/home startingIndex" + teamInfo.state.teamArray[team3Object.awayTeamIndex].startingIndex);
 		}
 	}
 }
