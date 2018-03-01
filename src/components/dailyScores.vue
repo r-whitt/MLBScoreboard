@@ -169,6 +169,23 @@
 							</tbody>
 						</table>
 					</div>
+
+					<div id="divTable" class="container col-sm-1" style="margin-left:-30px">
+						<table id="boxscores" class="table table-borderless">
+							<tbody>
+								<tr id="tableRow" height="55px">
+									<td><small><strong>{{ score.winning_pitcher.last }}, {{ score.winning_pitcher.first }}</strong></small>
+										<br><small>({{ score.winning_pitcher.wins }}-{{ score.winning_pitcher.losses }} {{ score.winning_pitcher.era }} ERA)</small>
+									</td>
+								</tr>
+								<tr id="tableRow" height="55px">
+									<td><small>{{ score.losing_pitcher.last }}, {{ score.losing_pitcher.first }}</strong></small>
+										<br><small>({{ score.losing_pitcher.wins }}-{{ score.losing_pitcher.losses }} {{ score.losing_pitcher.era }} ERA)</small>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
