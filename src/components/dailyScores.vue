@@ -170,16 +170,20 @@
 						</table>
 					</div>
 
-					<div id="divTable" class="container col-sm-1" style="margin-left:-30px">
+					<!-- Players of the game after the box score --> 
+					<div id="divTable" class="container col-sm-3" style="margin-left:-30px">
 						<table id="boxscores" class="table table-borderless">
 							<tbody>
 								<tr id="tableRow" height="55px">
-									<td><small><strong>{{ score.winning_pitcher.last }}, {{ score.winning_pitcher.first }}</strong></small>
+									<td>
+										<img src="http://content.mlb.com/images/headshots/current/60x60/621294.png" id="playerPic" class="img-circle">
+										<img :src=getWinPitcherPicURL(score.winning_pitcher.id) id="playerPic" class="img-circle">
+										<small><strong>{{ score.winning_pitcher.last }}, {{ score.winning_pitcher.first }}</strong></small>
 										<br><small>({{ score.winning_pitcher.wins }}-{{ score.winning_pitcher.losses }} {{ score.winning_pitcher.era }} ERA)</small>
 									</td>
 								</tr>
 								<tr id="tableRow" height="55px">
-									<td><small>{{ score.losing_pitcher.last }}, {{ score.losing_pitcher.first }}</strong></small>
+									<td><small><strong>{{ score.losing_pitcher.last }}, {{ score.losing_pitcher.first }}</strong></small>
 										<br><small>({{ score.losing_pitcher.wins }}-{{ score.losing_pitcher.losses }} {{ score.losing_pitcher.era }} ERA)</small>
 									</td>
 								</tr>
@@ -312,6 +316,9 @@
 				//console.log("showRightArrow: " + showRight)
 				return showRight
 			},
+			getWinPitcherPicURL(id) {
+				var winULR = 
+			},
 			showLeftArrow(away) {
 				var awayArrowIndex2 = store.state.team.teamArray.findIndex(team => team.name === away)
 				var showLeft = !(store.state.team.teamArray[awayArrowIndex2].startingIndex == -1)
@@ -374,6 +381,11 @@
 	.win {
 		font-weight: bold;
 	}
+	#playerPic {
+		height: 30px;
+		width: 30px;
+		border-radius: 50%;
+	}
 	#summary {
 		text-align: center;
 	}
@@ -386,6 +398,5 @@
 	#longDate {
 		font-size: 35px;
 		font-family:  "Trebuchet MS";
-		
 	}
 </style>
