@@ -171,19 +171,24 @@
 					</div>
 
 					<!-- Players of the game after the box score --> 
-					<div id="divTable" class="container col-sm-3" style="margin-left:-30px">
+					<div id="divTable" class="container col-sm-2" style="margin-left:-30px">
 						<table id="boxscores" class="table table-borderless">
 							<tbody>
 								<tr id="tableRow" height="55px">
-									<td>
-										<img src="http://content.mlb.com/images/headshots/current/60x60/621294.png" id="playerPic" class="img-circle">
+									<td style="width:30px">
 										<img :src=getWinPitcherPicURL(score.winning_pitcher.id) id="playerPic" class="img-circle">
+									</td>
+									<td>
 										<small><strong>{{ score.winning_pitcher.last }}, {{ score.winning_pitcher.first }}</strong></small>
 										<br><small>({{ score.winning_pitcher.wins }}-{{ score.winning_pitcher.losses }} {{ score.winning_pitcher.era }} ERA)</small>
-									</td>
+									</td>	
 								</tr>
 								<tr id="tableRow" height="55px">
-									<td><small><strong>{{ score.losing_pitcher.last }}, {{ score.losing_pitcher.first }}</strong></small>
+									<td style="width:30px">
+										<img :src=getLosePitcherPicURL(score.losing_pitcher.id) id="playerPic" class="img-circle">
+									</td>
+									<td>
+										<small><strong>{{ score.losing_pitcher.last }}, {{ score.losing_pitcher.first }}</strong></small>
 										<br><small>({{ score.losing_pitcher.wins }}-{{ score.losing_pitcher.losses }} {{ score.losing_pitcher.era }} ERA)</small>
 									</td>
 								</tr>
@@ -317,7 +322,12 @@
 				return showRight
 			},
 			getWinPitcherPicURL(id) {
-				var winULR = 
+				var winULR = "http://content.mlb.com/images/headshots/current/60x60/" + id + ".png"
+				return winULR
+			},
+			getLosePitcherPicURL(id) {
+				var loseURL = "http://content.mlb.com/images/headshots/current/60x60/" + id + ".png"
+				return loseURL
 			},
 			showLeftArrow(away) {
 				var awayArrowIndex2 = store.state.team.teamArray.findIndex(team => team.name === away)
