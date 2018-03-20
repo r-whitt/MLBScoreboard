@@ -176,20 +176,29 @@
 							<tbody>
 								<tr id="tableRow" height="55px">
 									<td style="width:30px">
-										<img :src=getWinPitcherPicURL(score.winning_pitcher.id) id="playerPic" class="img-circle">
+										<img :src=getPitcherPicURL(score.winning_pitcher.id) id="playerPic" class="img-circle">
 									</td>
 									<td>
-										<small><strong>{{ score.winning_pitcher.last }}, {{ score.winning_pitcher.first }}</strong></small>
+										<small><strong>W: {{ score.winning_pitcher.last }}</strong></small>
 										<br><small>({{ score.winning_pitcher.wins }}-{{ score.winning_pitcher.losses }} {{ score.winning_pitcher.era }} ERA)</small>
 									</td>	
 								</tr>
 								<tr id="tableRow" height="55px">
 									<td style="width:30px">
-										<img :src=getLosePitcherPicURL(score.losing_pitcher.id) id="playerPic" class="img-circle">
+										<img :src=getPitcherPicURL(score.losing_pitcher.id) id="playerPic" class="img-circle">
 									</td>
 									<td>
-										<small><strong>{{ score.losing_pitcher.last }}, {{ score.losing_pitcher.first }}</strong></small>
+										<small><strong>L: {{ score.losing_pitcher.last }}</strong></small>
 										<br><small>({{ score.losing_pitcher.wins }}-{{ score.losing_pitcher.losses }} {{ score.losing_pitcher.era }} ERA)</small>
+									</td>
+								</tr>
+								<tr v-if="score.save_pitcher.id >= 1" id="tableRow" height="55px">
+									<td style="width:30px">
+										<img :src=getPitcherPicURL(score.save_pitcher.id) id="playerPic" class="img-circle">
+									</td>
+									<td>
+										<small><strong>SV: {{ score.save_pitcher.last}}</strong></small>
+										<br><small>({{ score.save_pitcher.saves }})</small>
 									</td>
 								</tr>
 							</tbody>
@@ -321,13 +330,9 @@
 				//console.log("showRightArrow: " + showRight)
 				return showRight
 			},
-			getWinPitcherPicURL(id) {
+			getPitcherPicURL(id) {
 				var winULR = "http://content.mlb.com/images/headshots/current/60x60/" + id + ".png"
 				return winULR
-			},
-			getLosePitcherPicURL(id) {
-				var loseURL = "http://content.mlb.com/images/headshots/current/60x60/" + id + ".png"
-				return loseURL
 			},
 			showLeftArrow(away) {
 				var awayArrowIndex2 = store.state.team.teamArray.findIndex(team => team.name === away)
