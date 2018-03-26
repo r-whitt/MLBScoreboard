@@ -191,6 +191,11 @@
 									<td v-if="score.home_runs.player && score.home_runs.player.team_code == score.away_code">
 										{{ score.home_runs.player.first[0] }} {{ score.home_runs.player.last}}
 									</td>
+									<div v-for="player in getHomerRuns(score)">
+										<td v-if="player.team_code == score.away_code">
+											{{ player.first[0] }} {{ player.last}}
+										</td>
+									</div>
 								</tr>
 								<tr id="tableRow" height="55px">
 									<td style="width:30px">
@@ -200,9 +205,11 @@
 										<small><strong>L: {{ score.losing_pitcher.last }}</strong></small>
 										<br><small>({{ score.losing_pitcher.wins }}-{{ score.losing_pitcher.losses }} {{ score.losing_pitcher.era }} ERA)</small>
 									</td>
-									<td v-if="score.home_runs.player && score.home_runs.player.team_code == score.home_code">
-										{{ score.home_runs.player.first[0] }} {{ score.home_runs.player.last}}
-									</td>
+									<div v-for="player in getHomerRuns(score)">
+										<td v-if="player.team_code == score.home_code">
+											{{ player.first[0] }} {{ player.last}}
+										</td>
+									</div>
 								</tr>
 								<tr v-if="score.save_pitcher.id >= 1" id="tableRow" height="55px">
 									<td style="width:30px">
@@ -364,12 +371,12 @@
 					return "win"
 				}
 			},
-			getHomerRuns(homeRunArray, team) {
-				if (homeRunArray.team_code == team) {
-					var hrName = homeRunArray.first[0] + " " + homeRunArray.last
-					return hrName
-					console.log(hrName)
+			getHomerRuns(homeRunArray) {
+				if(!homeRunArray.home_runs.player) {
+					return homeRunArray
 				}
+				return homeRunArray.home_runs.player
+				console.log(homeRunArray.home_runs.player.length + " number of home runs")
 			}
 		},
 		beforeMount () {
