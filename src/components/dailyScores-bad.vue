@@ -1,13 +1,12 @@
 <template>
 	<div>
-		<div id="picker" class="container">
+		<div class="container-fluid">
 			<!-- Date Picker & Date Header --> 
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-4" style="margin-left: -30px">
+					<div class="col-md-4">
 						<datePicker placeholder="Select Date" v-model="storeDates.date" v-on:closed="save"></datePicker>
 					</div>
-					<div class="col-sm-1"></div>
 					<div id="longDate" class="col-md-4" v-model="getDate">
 						<label>{{ storeDates.date.toLocaleString("en-us", { month: "long" }) }}</label>
 						<label> {{ storeDates.date.getDate() }}, </label>
@@ -32,13 +31,13 @@
 		<button class="bt btn-xs btn-danger" @click="save">Save</button>
 		<button class="bt btn-xs btn-primary" @click="getStoreMutations">Get Scores!</button>
 		-->
-		<div v-for="score in updateStoreScoreboard" id="dailyScoreMain" class="container">
+		<div v-for="score in updateStoreScoreboard">
 			<div class="row">
 				<div class="col">
 					<!-- To Center the scores -->
 					<div class="col-sm-3"></div>
 						<!-- ADD CAUSE FOR NO GAMES HERE --> 
-					<div id="divTable" class="container col-md-2" style="margin-right:-75px">
+					<div id="divTable" class="container col-md-1" style="margin-right:-40px">
 						<!-- Team Names, record, etc -->
 						<table id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
@@ -85,7 +84,6 @@
 								<tr id="tableRow">
 									<th></th>
 									<th id="inning" v-for="(inning, index) in score.linescore.inning">{{ index + 1 }}</th>
-									<th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -93,9 +91,9 @@
 									<td></td>
 									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning">
 										<div v-if="inning.away.length == 0">X</div>
-										<div v-else>{{ inning.away }}</div>
+										<div v-else-if="inning.away">{{ inning.away }}</div>
+										<div v-else>inning.away not defined</div>
 									</td>
-									<td></td>
 								</tr>
 								<tr id="tableRow" height="55px">
 									<td></td>
@@ -103,9 +101,7 @@
 										<div v-if="inning.home.length == 0">X</div>
 										<div v-else>{{ inning.home }}</div>
 									</td>
-									<td></td>
 								</tr>
-								<br>
 							</tbody>
 						</table>
 
@@ -142,7 +138,6 @@
 									</td>
 									<td></td>
 								</tr>
-								<br>
 							</tbody>
 						</table>
 
@@ -151,7 +146,7 @@
 						<div v-else><span>Innings Didn't match</span></div>
 					</div>
 
-					<div id="divTable" class="container col-sm-1" style="margin-left: 50px">
+					<div id="divTable" class="container col-sm-1" style="margin-left:-30px">
 						<!-- Summary --> 
 						<table id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
@@ -177,40 +172,34 @@
 					</div>
 
 					<!-- Players of the game after the box score --> 
-					<div id="divTable" class="container col-sm-2" style="margin-left:-5px">
+					<div v-if="score.status.status == 'Final'" id="divTable" class="container col-sm-2" style="margin-left:-30px">
 						<table id="boxscores" class="table table-borderless">
-							<tbody id="playerBox">
+							<tbody>
 								<tr id="tableRow" height="55px">
-									<td style="width:30px margin-bottom: -10px">
-										<img :src=getPitcherPicURL(score.winning_pitcher.id) id="playerPic" class="img-circle">
+									<td style="width:30px">
+										<img :src=getWinPitcherPicURL(score.winning_pitcher.id) id="playerPic" class="img-circle">
 									</td>
 									<td>
-										<small><strong>W: {{ score.winning_pitcher.last }}</strong></small>
+										<small><strong>{{ score.winning_pitcher.last }}, {{ score.winning_pitcher.first }}</strong></small>
 										<br><small>({{ score.winning_pitcher.wins }}-{{ score.winning_pitcher.losses }} {{ score.winning_pitcher.era }} ERA)</small>
-									</td>
-									<td v-if="score.home_runs.player && score.home_runs.player.team_code == score.away_code">
-										{{ score.home_runs.player.first[0] }} {{ score.home_runs.player.last}}
-									</td>
+									</td>	
 								</tr>
 								<tr id="tableRow" height="55px">
 									<td style="width:30px">
-										<img :src=getPitcherPicURL(score.losing_pitcher.id) id="playerPic" class="img-circle">
+										<img :src=getLosePitcherPicURL(score.losing_pitcher.id) id="playerPic" class="img-circle">
 									</td>
 									<td>
-										<small><strong>L: {{ score.losing_pitcher.last }}</strong></small>
+										<small><strong>{{ score.losing_pitcher.last }}, {{ score.losing_pitcher.first }}</strong></small>
 										<br><small>({{ score.losing_pitcher.wins }}-{{ score.losing_pitcher.losses }} {{ score.losing_pitcher.era }} ERA)</small>
 									</td>
-									<td v-if="score.home_runs.player && score.home_runs.player.team_code == score.home_code">
-										{{ score.home_runs.player.first[0] }} {{ score.home_runs.player.last}}
-									</td>
 								</tr>
-								<tr v-if="score.save_pitcher.id >= 1" id="tableRow" height="55px">
+								<tr v-if="score.save_pitcher.id > 1" id="tableRow" height="55px">
 									<td style="width:30px">
-										<img :src=getPitcherPicURL(score.save_pitcher.id) id="playerPic" class="img-circle">
+										<img :src=getLosePitcherPicURL(score.save_pitcher.id) id="playerPic" class="img-circle">
 									</td>
 									<td>
-										<small><strong>SV: {{ score.save_pitcher.last}}</strong></small>
-										<br><small>({{ score.save_pitcher.saves }})</small>
+										<small><strong>{{ score.save_pitcher.last }}, {{ score.save_pitcher.first }}</strong></small>
+										<br><small>({{ score.save_pitcher.wins }}-{{ score.save_pitcher.losses }} {{ score.save_pitcher.era }} ERA)</small>
 									</td>
 								</tr>
 							</tbody>
@@ -226,6 +215,7 @@
 	import store from '../store.js'
 	import datePicker1 from './datepicker.vue'
 	import datePicker from 'vuejs-datepicker';
+
 	export default {
 		name: 'dailyScores',
 		components: {
@@ -341,9 +331,13 @@
 				//console.log("showRightArrow: " + showRight)
 				return showRight
 			},
-			getPitcherPicURL(id) {
+			getWinPitcherPicURL(id) {
 				var winULR = "http://content.mlb.com/images/headshots/current/60x60/" + id + ".png"
 				return winULR
+			},
+			getLosePitcherPicURL(id) {
+				var loseURL = "http://content.mlb.com/images/headshots/current/60x60/" + id + ".png"
+				return loseURL
 			},
 			showLeftArrow(away) {
 				var awayArrowIndex2 = store.state.team.teamArray.findIndex(team => team.name === away)
@@ -362,13 +356,6 @@
 			winner(score) {
 				if(score.linescore.r.home > score.linescore.r.away) {
 					return "win"
-				}
-			},
-			getHomerRuns(homeRunArray, team) {
-				if (homeRunArray.team_code == team) {
-					var hrName = homeRunArray.first[0] + " " + homeRunArray.last
-					return hrName
-					console.log(hrName)
 				}
 			}
 		},
@@ -431,14 +418,5 @@
 	#longDate {
 		font-size: 35px;
 		font-family:  "Trebuchet MS";
-	}
-	#dailyScoreMain {
-		background-color: white;
-	}
-	#picker {
-		background-color: white;
-	}
-	#playerBox {
-		font-size: 13px;
 	}
 </style>

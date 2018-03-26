@@ -71,6 +71,7 @@ export default {
   height: 60px;
   border: 0px;
   border-radius: 0px;
+  margin-bottom: 0px;
 }
 i {
   color: white;
@@ -84,6 +85,6 @@ li:hover {
   font-family: Arial;
 }
 #mainPage {
-  background-color: #f7f8f9;
+  background-color: #d6d6d6;
 }
 </style>
