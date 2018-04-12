@@ -1,3 +1,18 @@
+4/11/18
+1) Adjust "Future Schedule" to go to a in construction page
+	Change wording?
+2)Add borders around Box Scores?
+3)Pretty up Date Picker? 
+	Make a border that it fits in or an image that it fits in? 
+4) Add Loading Wheel?
+5) Make No Score Display Something?
+6) Either Disable Current Date & Future Dates or have them show construction pages and not the normal historcal data scores
+7) Change "Home" to "Scores"
+8) add Postponed logic to prevent score tables from showing? July 5th, 2017 - Mets Nationals
+
+
+
+
 When using the Date Picker to Select, make sure there are leading 0s before creating the URL
 	Currently it is error because the URL is wrong
 		Good: 

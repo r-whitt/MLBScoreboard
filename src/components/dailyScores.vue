@@ -177,25 +177,25 @@
 					</div>
 
 					<!-- Players of the game after the box score --> 
-					<div id="divTable" class="container col-sm-2" style="margin-left:-5px">
+					<div id="divTable" class="container col-sm-3" style="margin-left:-5px">
 						<table id="boxscores" class="table table-borderless">
 							<tbody id="playerBox">
 								<tr id="tableRow" height="55px">
-									<td style="width:30px margin-bottom: -10px">
+									<td style="margin-bottom: -10px">
 										<img :src=getPitcherPicURL(score.winning_pitcher.id) id="playerPic" class="img-circle">
 									</td>
-									<td>
+									<td class="col-sm-6">
 										<small><strong>W: {{ score.winning_pitcher.last }}</strong></small>
 										<br><small>({{ score.winning_pitcher.wins }}-{{ score.winning_pitcher.losses }} {{ score.winning_pitcher.era }} ERA)</small>
 									</td>
-									<td v-if="score.home_runs.player && score.home_runs.player.team_code == score.away_code">
-										{{ score.home_runs.player.first[0] }} {{ score.home_runs.player.last}}
+									<td class="col-sm-6">
+										<small><strong>AWAY HR:</strong></small>
+										<div v-for="player in getHomerRuns(score)">
+											<td v-if="player.team_code == score.away_code">
+												<small>{{ player.first[0] }} {{ player.last}} ({{ player.std_hr }})</small>
+											</td>
+										</div>
 									</td>
-									<div v-for="player in getHomerRuns(score)">
-										<td v-if="player.team_code == score.away_code">
-											{{ player.first[0] }} {{ player.last}}
-										</td>
-									</div>
 								</tr>
 								<tr id="tableRow" height="55px">
 									<td style="width:30px">
@@ -205,11 +205,14 @@
 										<small><strong>L: {{ score.losing_pitcher.last }}</strong></small>
 										<br><small>({{ score.losing_pitcher.wins }}-{{ score.losing_pitcher.losses }} {{ score.losing_pitcher.era }} ERA)</small>
 									</td>
-									<div v-for="player in getHomerRuns(score)">
-										<td v-if="player.team_code == score.home_code">
-											{{ player.first[0] }} {{ player.last}}
-										</td>
-									</div>
+									<td class="col-sm-6">
+										<small><strong>Home HR:</strong></small>
+										<div v-for="player in getHomerRuns(score)">
+											<td v-if="player.team_code == score.home_code">
+												<small>{{ player.first[0] }} {{ player.last}} ({{ player.std_hr }})</small>
+											</td>
+										</div>
+									</td>
 								</tr>
 								<tr v-if="score.save_pitcher.id >= 1" id="tableRow" height="55px">
 									<td style="width:30px">
@@ -217,7 +220,7 @@
 									</td>
 									<td>
 										<small><strong>SV: {{ score.save_pitcher.last}}</strong></small>
-										<br><small>({{ score.save_pitcher.saves }})</small>
+										<br><small id="winLossRecord">({{ score.save_pitcher.saves }})</small>
 									</td>
 								</tr>
 							</tbody>
