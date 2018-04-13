@@ -11,6 +11,8 @@
 8) add Postponed logic to prevent score tables from showing? July 5th, 2017 - Mets Nationals
 9) Move HRs to another table and -margin to put together
 	this will fix the Win/Lose/SV from being different spacing
+	--Conditionally render Home/Away HR titles
+	--Make small & Strong
 
 
 
