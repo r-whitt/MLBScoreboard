@@ -216,7 +216,7 @@
 							<tbody>
 								<tr id="tableRow" height="55px">
 									<td>
-										<div v-if="score.home_runs.length>1">
+										<div v-if="getHRTitle(score)">
 											<small><strong>AWAY HR:</strong></small>
 										</div>
 										<div v-for="player in getHomerRuns(score)">
@@ -391,6 +391,18 @@
 				}
 				return homeRunArray.home_runs.player
 				console.log(homeRunArray.home_runs.player.length + " number of home runs")
+			},
+			getHRTitle(homeRunArray) {
+				var hrArray = new Array(homeRunArray.home_runs)
+				console.log("length: " + hrArray.length)
+				if(!homeRunArray.home_runs.player) {
+					console.log("no home runs")
+				} else {
+					//console.log("hrArray "+ JSON.stringify(hrArray))
+					hrArray.forEach(function(player){
+					console.log("hrArray forEach1 " + JSON.stringify(player))
+				})
+				}
 			}
 		},
 		beforeMount () {
