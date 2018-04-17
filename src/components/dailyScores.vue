@@ -393,13 +393,20 @@
 				console.log(homeRunArray.home_runs.player.length + " number of home runs")
 			},
 			getHRTitle(homeRunArray) {
-				var hrArray = new Array(homeRunArray.home_runs)
-				console.log("length: " + hrArray.length)
+				//console.log("length: " + hrArray.length)
 				if(!homeRunArray.home_runs.player) {
 					console.log("no home runs")
 				} else {
-					//console.log("hrArray "+ JSON.stringify(hrArray))
+					var hrArray = new Array(homeRunArray.home_runs.player)
+					console.log("checking Data" + JSON.stringify(homeRunArray.home_runs.player))
+					console.log("typeof " + homeRunArray.home_runs.player)
+					console.log("hrArray "+ JSON.stringify(hrArray))
 					hrArray.forEach(function(player){
+					console.log("forEach1 " + typeof player)
+					console.log("forEach2 " + Object.keys(player))
+					for (var team_code in player) {
+						console.log("forEach3 " + team_code + " value " + (player[team_code].team_code))
+					}
 					console.log("hrArray forEach1 " + JSON.stringify(player))
 				})
 				}
