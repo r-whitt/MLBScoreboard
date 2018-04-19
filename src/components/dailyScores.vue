@@ -216,7 +216,7 @@
 							<tbody>
 								<tr id="tableRow" height="55px">
 									<td>
-										<div v-if="getHRTitle(score)">
+										<div v-if="getHRTitle(score, score.away_code)">
 											<small><strong>AWAY HR:</strong></small>
 										</div>
 										<div v-for="player in getHomerRuns(score)">
@@ -224,7 +224,7 @@
 												<small>{{ player.first[0] }} {{ player.last}} ({{ player.std_hr }})</small>
 											</td>
 										</div>
-										<div>
+										<div v-if="getHRTitle(score, score.home_code)">
 											<strong><small>Home HR:</small></strong>
 										</div>
 										<div v-for="player in getHomerRuns(score)">
@@ -392,23 +392,17 @@
 				return homeRunArray.home_runs.player
 				console.log(homeRunArray.home_runs.player.length + " number of home runs")
 			},
-			getHRTitle(homeRunArray) {
+			getHRTitle(homeRunArray, team) {
 				//console.log("length: " + hrArray.length)
 				if(!homeRunArray.home_runs.player) {
-					console.log("no home runs")
+					return false
 				} else {
-					var hrArray = new Array(homeRunArray.home_runs.player)
-					console.log("checking Data" + JSON.stringify(homeRunArray.home_runs.player))
-					console.log("typeof " + homeRunArray.home_runs.player)
-					console.log("hrArray "+ JSON.stringify(hrArray))
-					hrArray.forEach(function(player){
-					console.log("forEach1 " + typeof player)
-					console.log("forEach2 " + Object.keys(player))
-					for (var team_code in player) {
-						console.log("forEach3 " + team_code + " value " + (player[team_code].team_code))
+					var i;
+					for (i = 0; i < homeRunArray.home_runs.player.length; i++) {
+						if(homeRunArray.home_runs.player[i].team_code == team) {
+							return true
+						} 
 					}
-					console.log("hrArray forEach1 " + JSON.stringify(player))
-				})
 				}
 			}
 		},
@@ -438,6 +432,11 @@
 	}
 	#boxscores tbody tr td {
 		font-size: 100%;
+		border-width: 0px;
+		background-color: white;
+	}
+	#boxscores tbody tr td div {
+		font-size: 95%;
 		border-width: 0px;
 		background-color: white;
 	}
