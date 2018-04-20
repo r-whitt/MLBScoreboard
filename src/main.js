@@ -14,13 +14,15 @@ import VueRouter from 'vue-router'
 
 import Hello from './components/HelloWorld.vue'
 import dailyScores from './components/dailyScores.vue'
+import schedule from './components/schedule.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
 const routes = [
 	{path: '/', component: dailyScores},
-	{path: '/home', component: dailyScores}
+  {path: '/scores', component: dailyScores},
+  {path: '/schedule', component: schedule} 
 ]
 
 const router = new VueRouter ({

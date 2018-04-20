@@ -2,17 +2,17 @@
   <div id="wrapper">
     <nav id="nav" class="navbar navbar-default">
       <div class="container">
-        <a id="navText" class="navbar-brand" href="#">
+        <router-link class="navbar-brand" id="navText" to="/scores">
           <i class="glyphicon glyphicon-dashboard"></i>
           MLB Test
-        </a>
+        </router-link>
         <ul class="nav navbar-nav">
           <!-- THIS IS DEPRECIATED IN VUE-ROUTER 2
           <li><a v-link="'/home'">Home</a></li>
           <li><a v-link="'/time-entries'">Time Entries</a></li>
           -->
-          <li><router-link id="navText" to="/home">Home</router-link></li>
-          <li><router-link id="navText" to="/time-entries">Future Schedule</router-link></li>
+          <li><router-link id="navText" to="/scores">Scores</router-link></li>
+          <li><router-link id="navText" to="/schedule">Schedule</router-link></li>
         </ul>
       </div>
     </nav>
@@ -33,11 +33,13 @@
 <script>
   import store from './store.js'
   import dailyScores from './components/dailyScores.vue'
+  import schedule from './components/schedule.vue'
 
 export default {
   name: 'app',
   components: {
-    dailyScores
+    dailyScores,
+    schedule
   },
   data: {
     message: ""
@@ -45,7 +47,6 @@ export default {
   computed: {
     getStoreTest() {
       return store.state
-      return "test"
     }
   },
   methods: {

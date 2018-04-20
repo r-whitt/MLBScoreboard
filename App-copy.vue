@@ -12,7 +12,7 @@
           <li><a v-link="'/time-entries'">Time Entries</a></li>
           -->
           <li><router-link to="/home">Home</router-link></li>
-          <li><router-link to="/time-entries">Future Schedule</router-link></li>
+          <li><router-link to="/time-entries">Schedule</router-link></li>
         </ul>
       </div>
     </nav>
