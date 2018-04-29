@@ -34,6 +34,7 @@ var store = new Vuex.Store ({
 var scores = {
 	state: {
 		message: 'Test Message-New Store',
+		loading: false,
 		messageArray: [
 			{id: 1, message: "1st message", show: true},
 			{id: 2, message: "2nd message", show: false}
@@ -56,6 +57,8 @@ var scores = {
 			scores.state.message += message
 		},
 		updateScoreboardNew (store) {
+			scores.state.loading = true;
+			console.log("loading start" + scores.state.loading);
 			//Uses the new date to configure URL and update api call for scoreboard
 			var url = ("http://gd2.mlb.com/components/game/mlb/year_" + scores.state.dateObject.year + "/month_" + scores.state.dateObject.month + "/day_" + scores.state.dateObject.day + "/master_scoreboard.json")
 			console.log("URL is: " + url) 
@@ -71,12 +74,16 @@ var scores = {
 				}
 				
 			}).then(response => {
+				scores.state.loading = false;
+				console.log("loading" + scores.state.loading);
 				console.log("url: " + url)
 				//console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
 				scores.state.dailyScores = response.body.data.games.game
 				//length = scores.state.dailyScores.length
 				//console.log("Scores State dailyScores length: " + scores.state.dailyScores.length)
 			}, response => {
+				scores.state.loading = false;
+				console.log(scores.state.loading);
 				console.log("vue resource had an error: " + url + "\n" + "response is: " + response)
 			})
 		},

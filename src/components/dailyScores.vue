@@ -32,6 +32,7 @@
 		<button class="bt btn-xs btn-danger" @click="save">Save</button>
 		<button class="bt btn-xs btn-primary" @click="getStoreMutations">Get Scores!</button>
 		-->
+		<i v-show="loadingDOM" class="fa fa-spinner fa-spin"></i>
 		<div v-for="score in updateStoreScoreboard" id="dailyScoreMain" class="container">
 			<div class="row">
 				<div class="col">
@@ -279,6 +280,10 @@
 			}
 		},
 		computed: {
+			loadingDOM(){
+				console.log("Daily Load " + store.state.score.loading)
+				return store.state.score.loading
+			},
 			updateStoreScoreboard () {
 				//this.teamInfo = store.state.team.teamArray
 				//console.log("teamAray Length: " + this.teamInfo[0].startingIndex)
