@@ -13,7 +13,8 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
-    "@fortawesome/fontawesome": "^1.1.5",
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/vue-fontawesome": "0.0.22",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
