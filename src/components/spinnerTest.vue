@@ -2,8 +2,8 @@
     <div class="jumbotron" id="imgWrapper">
       <p>Testing</p>
       <!-- to make wheel appear/disappear change the id -->
-      <div id="loader" class="img-responsive center-block"></div>
-      <div id="loadText">
+      <div class="img-responsive center-block"  v-bind:class="{'loader': isLoading}"></div>
+      <div align="center">
         <p>Loading....</p>
       </div>
       <br>
@@ -18,7 +18,18 @@
 import store from '../store.js'
 
 export default {
-  name: 'spinnerTest'
+  name: 'spinnerTest',
+  data() {
+      var isLoading = true
+      return {
+          isLoading
+      }
+  }, 
+  methods: {
+      loading() {
+          return true
+      }
+  }
 }
 </script>
 
@@ -26,7 +37,7 @@ export default {
 #imgWrapper {
     background-color:white;
 }
-#loader {
+.loader {
     border: 16px solid #f3f3f3; /* Light grey */
     border-top: 16px solid #221faf; /*Blue*/
     border-radius: 50%; /*makes the image a wheel*/

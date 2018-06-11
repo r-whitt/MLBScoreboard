@@ -32,7 +32,9 @@
 		<button class="bt btn-xs btn-danger" @click="save">Save</button>
 		<button class="bt btn-xs btn-primary" @click="getStoreMutations">Get Scores!</button>
 		-->
-		<i v-show="loadingDOM" class="fa fa-spinner fa-spin"></i>
+		<!--
+		<i v-if="true" class="fa fa-spinner fa-spin"></i>
+		-->
 		<div v-for="score in updateStoreScoreboard" id="dailyScoreMain" class="container">
 			<div class="row">
 				<div class="col">
@@ -245,15 +247,15 @@
 </template>
 
 <script>
-	import store from '../store.js'
-	import datePicker1 from './datepicker.vue'
+	import store from '../store.js';
+	import datePicker1 from './datepicker.vue';
 	import datePicker from 'vuejs-datepicker';
+	//import 'font-awesome/css/font-awesome.css'; 
 	export default {
 		name: 'dailyScores',
 		components: {
 			datePicker,
-			datePicker1
-  		},
+			datePicker1  		},
 		data () {
 			var updateDailyScore = []
 			var length = 0
