@@ -16,7 +16,7 @@
 				</div>
 			</div>
 		</div>
-		<LoadingSpinner v-if="loading"></LoadingSpinner>
+		<LoadingSpinner v-if="loading" ></LoadingSpinner>
 		<!--Used to test w/o Date Picker
 		<div class="row">
 			<div class="col-sm-3" align="left">
@@ -268,7 +268,8 @@
 				month: "07",
 				day: "15"
 			}
-			var loading = store.state.score.loading
+			//var loading = store.state.score.loading
+			var loading = true
 			var storeDates = {
 				date: new Date(2017, 6, 15)
 			}
@@ -289,8 +290,9 @@
 		},
 		computed: {
 			loadingDOM(){
-				console.log("Daily Load " + store.state.score.loading)
-				return store.state.score.loading
+				console.log("loadingDOM " + this.loading)
+				//this.loading = false
+				return this.loading
 			},
 			updateStoreScoreboard () {
 				//this.teamInfo = store.state.team.teamArray
@@ -387,6 +389,7 @@
 				return showLeft
 			},
 			save (date) {
+				this.loading = true;
 				//Updating store with the new date
 				//store.commit('updateDate', this.storeDates.date) -- for use w/o date picker
 				store.commit('updateDatePicker', this.storeDates.date)
@@ -405,6 +408,10 @@
 				return homeRunArray.home_runs.player
 				console.log(homeRunArray.home_runs.player.length + " number of home runs")
 			},
+			enableLoading() {
+				console.log("enableLoading")
+				this.loading = true;
+			},
 			getHRTitle(homeRunArray, team) {
 				//console.log("length: " + hrArray.length)
 				if(!homeRunArray.home_runs.player) {
@@ -421,6 +428,19 @@
 		},
 		beforeMount () {
 			this.getStoreMutations();
+		},
+		mounted () {
+			//this.loading = false;
+			console.log("mounted: " + this.loading)
+		},
+		beforeUpdate () {
+			//this.loading = true;
+			//this.enableLoading();
+			console.log("beforeUpdate: " + this.loading)
+		},
+		updated () {
+			this.loading = false;
+			console.log("updated: " + this.loading)
 		}
 	}
 </script>

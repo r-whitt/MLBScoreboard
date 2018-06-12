@@ -74,7 +74,7 @@ var scores = {
 				}
 				
 			}).then(response => {
-				scores.state.loading = false;
+				//scores.state.loading = false;
 				console.log("loading " + scores.state.loading);
 				console.log("url: " + url)
 				//console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
@@ -82,7 +82,7 @@ var scores = {
 				//length = scores.state.dailyScores.length
 				//console.log("Scores State dailyScores length: " + scores.state.dailyScores.length)
 			}, response => {
-				scores.state.loading = false;
+				//scores.state.loading = false;
 				console.log(scores.state.loading);
 				console.log("vue resource had an error: " + url + "\n" + "response is: " + response)
 			})
