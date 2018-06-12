@@ -16,6 +16,7 @@
 				</div>
 			</div>
 		</div>
+		<LoadingSpinner v-if="loading"></LoadingSpinner>
 		<!--Used to test w/o Date Picker
 		<div class="row">
 			<div class="col-sm-3" align="left">
@@ -250,12 +251,15 @@
 	import store from '../store.js';
 	import datePicker1 from './datepicker.vue';
 	import datePicker from 'vuejs-datepicker';
+	import LoadingSpinner from './loadingSpinner.vue'
 	//import 'font-awesome/css/font-awesome.css'; 
 	export default {
 		name: 'dailyScores',
 		components: {
 			datePicker,
-			datePicker1  		},
+			datePicker1,
+			LoadingSpinner  		
+			},
 		data () {
 			var updateDailyScore = []
 			var length = 0
@@ -264,6 +268,7 @@
 				month: "07",
 				day: "15"
 			}
+			var loading = store.state.score.loading
 			var storeDates = {
 				date: new Date(2017, 6, 15)
 			}
@@ -278,7 +283,8 @@
 				length,
 				tempYear, 
 				storeDates,
-				teamInfo
+				teamInfo, 
+				loading
 			}
 		},
 		computed: {

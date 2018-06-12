@@ -15,7 +15,7 @@ import VueRouter from 'vue-router'
 import Hello from './components/HelloWorld.vue'
 import dailyScores from './components/dailyScores.vue'
 import schedule from './components/schedule.vue'
-import spinnerTest from './components/spinnerTest.vue'
+import loadingSpinner from "./components/loadingSpinner.vue";
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -24,7 +24,7 @@ const routes = [
 	{path: '/', component: dailyScores},
   {path: '/scores', component: dailyScores},
   {path: '/schedule', component: schedule},
-  {path: '/spinnerTest', component: spinnerTest}
+  {path: '/loadingSpinner', component: loadingSpinner}
 ]
 
 const router = new VueRouter ({

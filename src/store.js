@@ -75,7 +75,7 @@ var scores = {
 				
 			}).then(response => {
 				scores.state.loading = false;
-				console.log("loading" + scores.state.loading);
+				console.log("loading " + scores.state.loading);
 				console.log("url: " + url)
 				//console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
 				scores.state.dailyScores = response.body.data.games.game
@@ -86,6 +86,10 @@ var scores = {
 				console.log(scores.state.loading);
 				console.log("vue resource had an error: " + url + "\n" + "response is: " + response)
 			})
+		},
+		updateLoader(store, boolean) {
+			console.log("vuex received: " + boolean)
+			scores.state.loading = boolean
 		},
 		resetTeamIndexes () {
 			teamInfo.state.teamArray.forEach(function(element) {

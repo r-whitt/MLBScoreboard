@@ -13,7 +13,7 @@
           -->
           <li><router-link id="navText" to="/scores">Scores</router-link></li>
           <li><router-link id="navText" to="/schedule">Schedule</router-link></li>
-          <li><router-link id="navText" to="/spinnerTest">Spinner Example</router-link></li>
+          <li><router-link id="navText" to="/loadingSpinner">Loading Example</router-link></li>
         </ul>
       </div>
     </nav>
@@ -35,14 +35,14 @@
   import store from './store.js'
   import dailyScores from './components/dailyScores.vue'
   import schedule from './components/schedule.vue'
-  import spinnerTest from './components/spinnerTest.vue'
+  import loadingSpinner from './components/loadingSpinner.vue'
 
 export default {
   name: 'app',
   components: {
     dailyScores,
     schedule,
-    spinnerTest
+    loadingSpinner
   },
   data: {
     message: ""

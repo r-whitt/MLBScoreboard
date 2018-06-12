@@ -3,7 +3,7 @@
       <p>Testing</p>
       <!-- to make wheel appear/disappear change the id -->
       <div class="img-responsive center-block"  v-bind:class="{'loader': isLoading}"></div>
-      <div align="center">
+      <div align="center" v-show="isLoading">
         <p>Loading....</p>
       </div>
       <br>
@@ -20,7 +20,7 @@ import store from '../store.js'
 export default {
   name: 'spinnerTest',
   data() {
-      var isLoading = true
+      var isLoading = true;
       return {
           isLoading
       }
