@@ -16,7 +16,7 @@
 				</div>
 			</div>
 		</div>
-		<LoadingSpinner v-if="loading" ></LoadingSpinner>
+		<LoadingSpinner v-show="loadingDOM"></LoadingSpinner>
 		<!--Used to test w/o Date Picker
 		<div class="row">
 			<div class="col-sm-3" align="left">
@@ -269,7 +269,7 @@
 				day: "15"
 			}
 			//var loading = store.state.score.loading
-			var loading = true
+			var loading = true;
 			var storeDates = {
 				date: new Date(2017, 6, 15)
 			}
@@ -408,10 +408,6 @@
 				return homeRunArray.home_runs.player
 				console.log(homeRunArray.home_runs.player.length + " number of home runs")
 			},
-			enableLoading() {
-				console.log("enableLoading")
-				this.loading = true;
-			},
 			getHRTitle(homeRunArray, team) {
 				//console.log("length: " + hrArray.length)
 				if(!homeRunArray.home_runs.player) {
@@ -428,15 +424,11 @@
 		},
 		beforeMount () {
 			this.getStoreMutations();
+			this.loading = true;
 		},
 		mounted () {
-			//this.loading = false;
-			console.log("mounted: " + this.loading)
 		},
 		beforeUpdate () {
-			//this.loading = true;
-			//this.enableLoading();
-			console.log("beforeUpdate: " + this.loading)
 		},
 		updated () {
 			this.loading = false;
