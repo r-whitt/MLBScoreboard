@@ -52,7 +52,7 @@
 										<div colspan="1" id="gameStatus" v-if="score.status.inning > 9">
 											<span v-if="score.status.inning > 9">F/{{ score.status.inning }}</span>
 										</div>
-										<div v-else>
+										<div v-else-if="score.status.status == 'Completed Early'">
 											<span v-if="score.status.status == 'Completed Early'" id="gameStatus">Weather</span>
 											<span v-else id="gameStatus">{{ score.status.status }}</span>
 										</div>
@@ -290,7 +290,6 @@
 		},
 		computed: {
 			loadingDOM(){
-				console.log("loadingDOM " + this.loading)
 				//this.loading = false
 				return this.loading
 			},
@@ -393,8 +392,6 @@
 				//Updating store with the new date
 				//store.commit('updateDate', this.storeDates.date) -- for use w/o date picker
 				store.commit('updateDatePicker', this.storeDates.date)
-				//console.log("Sending to Store: " + this.storeDates.date)
-				//console.log("store: " + store.state.score.dateObject.year)
 			},
 			winner(score) {
 				if(score.linescore.r.home > score.linescore.r.away) {
@@ -432,7 +429,6 @@
 		},
 		updated () {
 			this.loading = false;
-			console.log("updated: " + this.loading)
 		}
 	}
 </script>

@@ -1,8 +1,8 @@
 4/11/18
-4) Add Loading Wheel?
 5) Make No Score Display Something?
 6) Either Disable Current Date & Future Dates or have them show construction pages and not the normal historcal data scores
 9) Add Current Date (Date that will pull first) as yesterday (current - 1 day)
+4) Add Loading Wheel? - work on loading spinner when updating
 3)Pretty up Date Picker? 
 	Make a border that it fits in or an image that it fits in? 
 4)Add toolkits when hovering

@@ -58,7 +58,6 @@ var scores = {
 		},
 		updateScoreboardNew (store) {
 			scores.state.loading = true;
-			console.log("loading start" + scores.state.loading);
 			//Uses the new date to configure URL and update api call for scoreboard
 			var url = ("http://gd2.mlb.com/components/game/mlb/year_" + scores.state.dateObject.year + "/month_" + scores.state.dateObject.month + "/day_" + scores.state.dateObject.day + "/master_scoreboard.json")
 			console.log("URL is: " + url) 
@@ -75,7 +74,6 @@ var scores = {
 				
 			}).then(response => {
 				//scores.state.loading = false;
-				console.log("loading " + scores.state.loading);
 				console.log("url: " + url)
 				//console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
 				scores.state.dailyScores = response.body.data.games.game
@@ -83,7 +81,6 @@ var scores = {
 				//console.log("Scores State dailyScores length: " + scores.state.dailyScores.length)
 			}, response => {
 				//scores.state.loading = false;
-				console.log(scores.state.loading);
 				console.log("vue resource had an error: " + url + "\n" + "response is: " + response)
 			})
 		},
@@ -98,6 +95,9 @@ var scores = {
 				element.starting = true;
 			})
 		},
+		clearScores(store) {
+			scores.state.dailyScores = null;
+		},
 		updateDatePicker (store, timeObject) {
 			//Used with the Datepicker v:on=closed
 			scores.state.dateObject.year = timeObject.getFullYear();
@@ -110,6 +110,7 @@ var scores = {
 			//console.log("Store date: " + scores.state.dateObject.month + "\ " + scores.state.dateObject.day + "\ " + scores.state.dateObject.year)
 			//console.log("datePicker about to fetch new scores")
 			scores.mutations.resetTeamIndexes()
+			scores.mutations.clearScores()
 			scores.mutations.updateScoreboardNew()
 		},
 		updateDate(store, timeObject) {
