@@ -1,6 +1,7 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import VueResource from 'vue-resource'
+import dailyScores from './components/dailyScores.vue'
 //import score from './js/mlbApp/score.js'
 Vue.use(VueResource)
 
@@ -40,6 +41,7 @@ var scores = {
 			{id: 2, message: "2nd message", show: false}
 		],
 		dailyScores: [],
+		noScore: [],
 		dateObject: {
 			year: "2017",
 			month: "07",
@@ -76,9 +78,14 @@ var scores = {
 				//scores.state.loading = false;
 				console.log("url: " + url)
 				//console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
-				scores.state.dailyScores = response.body.data.games.game
-				//length = scores.state.dailyScores.length
-				//console.log("Scores State dailyScores length: " + scores.state.dailyScores.length)
+				//	console.log("in store then " + JSON.stringify(response.body.data.games))
+				if (response.body.data.games.game.length > 1) {
+					scores.state.dailyScores = response.body.data.games.game;
+					console.log("store games length1 " + scores.state.dailyScores.length);
+        		} else {
+					scores.state.noScore = response.body.data.games;
+					console.log("store state noScore: " + JSON.stringify(scores.state.noScore));
+				}
 			}, response => {
 				//scores.state.loading = false;
 				console.log("vue resource had an error: " + url + "\n" + "response is: " + response)
@@ -96,7 +103,8 @@ var scores = {
 			})
 		},
 		clearScores(store) {
-			scores.state.dailyScores = null;
+			scores.state.dailyScores = [];
+			scores.state.noScore = []
 		},
 		updateDatePicker (store, timeObject) {
 			//Used with the Datepicker v:on=closed

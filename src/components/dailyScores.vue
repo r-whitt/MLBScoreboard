@@ -36,6 +36,9 @@
 		<!--
 		<i v-if="true" class="fa fa-spinner fa-spin"></i>
 		-->
+		<div v-for="scores in updateNoScore" id="dailyScoreMain" class="container">
+			<strong>{{ scores.description }}</strong>
+		</div>
 		<div v-for="score in updateStoreScoreboard" id="dailyScoreMain" class="container">
 			<div class="row">
 				<div class="col">
@@ -52,7 +55,7 @@
 										<div colspan="1" id="gameStatus" v-if="score.status.inning > 9">
 											<span v-if="score.status.inning > 9">F/{{ score.status.inning }}</span>
 										</div>
-										<div v-else-if="score.status.status == 'Completed Early'">
+										<div v-else>
 											<span v-if="score.status.status == 'Completed Early'" id="gameStatus">Weather</span>
 											<span v-else id="gameStatus">{{ score.status.status }}</span>
 										</div>
@@ -166,12 +169,14 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr id="tableRow" height="55px">
+								<tr v-if="!score.linescore">No Linescore in row</tr>
+								<tr v-else id="tableRow" height="55px">
 									<td id="summary" v-bind:class="(parseInt(score.linescore.r.home)<parseInt(score.linescore.r.away)) ? 'win':''">{{ score.linescore.r.away }}</td>
 									<td id="summary">{{ score.linescore.h.away }}</td>
 									<td id="summary">{{ score.linescore.e.away }}</td>
 								</tr>
-								<tr id="tableRow" height="55px">
+								<tr v-if="!score.linescore">No Linescore in row</tr>
+								<tr v-else id="tableRow" height="55px">
 									<td id="summary" v-bind:class="(parseInt(score.linescore.r.home)>parseInt(score.linescore.r.away)) ? 'win':''">{{ score.linescore.r.home }}</td>
 									<td id="summary">{{ score.linescore.h.home }}</td>
 									<td id="summary">{{ score.linescore.e.away }}</td>
@@ -268,6 +273,11 @@
 				month: "07",
 				day: "15"
 			}
+			var noScoreObj = {
+				render: false,
+				scoreLength: 0,
+				data: {}
+			}
 			//var loading = store.state.score.loading
 			var loading = true;
 			var storeDates = {
@@ -278,6 +288,7 @@
 				month: "",
 				day: ""
 			}
+			var data = {}
 			var teamInfo = []
 			return {
 				updateDailyScore,
@@ -285,6 +296,8 @@
 				tempYear, 
 				storeDates,
 				teamInfo, 
+				noScoreObj,
+				data,
 				loading
 			}
 		},
@@ -296,7 +309,14 @@
 			updateStoreScoreboard () {
 				//this.teamInfo = store.state.team.teamArray
 				//console.log("teamAray Length: " + this.teamInfo[0].startingIndex)
+				console.log("dailyScores updated: " + JSON.stringify(store.state.score.dailyScores))
+				console.log("dailyScores updated: " + typeof store.state.score.dailyScores)
 				return store.state.score.dailyScores
+			},
+			updateNoScore () {
+				console.log("updateNoScore started " + this.noScoreObj.render)
+				console.log("udpateNoScore " + JSON.stringify(store.state.score.noScoreObj))
+				return store.state.score.noScore
 			},
 			updateTeamInfo () {
 				this.teamInfo = store.state.team.teamArray 
@@ -313,6 +333,9 @@
 		methods: {
 			getStoreMutations () {
 				store.commit('updateScoreboardNew')
+			},
+			updateNoScore () {
+				this.noScoreObj.render = true
 			},
 			updateTeamInningRange (away, home, inning) {
 				var awayTeamIndex = store.state.team.teamArray.findIndex(team => team.name === away)
@@ -389,6 +412,7 @@
 			},
 			save (date) {
 				this.loading = true;
+				this.noScoreObj.render = false;
 				//Updating store with the new date
 				//store.commit('updateDate', this.storeDates.date) -- for use w/o date picker
 				store.commit('updateDatePicker', this.storeDates.date)
@@ -401,9 +425,10 @@
 			getHomerRuns(homeRunArray) {
 				if(!homeRunArray.home_runs.player) {
 					return homeRunArray
+				} else {
+					return homeRunArray.home_runs.player
+					console.log(homeRunArray.home_runs.player.length + " number of home runs")
 				}
-				return homeRunArray.home_runs.player
-				console.log(homeRunArray.home_runs.player.length + " number of home runs")
 			},
 			getHRTitle(homeRunArray, team) {
 				//console.log("length: " + hrArray.length)
