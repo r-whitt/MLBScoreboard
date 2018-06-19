@@ -41,7 +41,7 @@ var scores = {
 			{id: 2, message: "2nd message", show: false}
 		],
 		dailyScores: [],
-		noScore: [],
+		allStarScore: [],
 		dateObject: {
 			year: "2017",
 			month: "07",
@@ -83,8 +83,8 @@ var scores = {
 					scores.state.dailyScores = response.body.data.games.game;
 					console.log("store games length1 " + scores.state.dailyScores.length);
         		} else {
-					scores.state.noScore = response.body.data.games;
-					console.log("store state noScore: " + JSON.stringify(scores.state.noScore));
+					scores.state.allStarScore = response.body.data.games;
+					//console.log("store state all star: " + JSON.stringify(scores.state.allStarScore[0].game.description));
 				}
 			}, response => {
 				//scores.state.loading = false;
@@ -104,7 +104,7 @@ var scores = {
 		},
 		clearScores(store) {
 			scores.state.dailyScores = [];
-			scores.state.noScore = []
+			scores.state.allStarScore = []
 		},
 		updateDatePicker (store, timeObject) {
 			//Used with the Datepicker v:on=closed

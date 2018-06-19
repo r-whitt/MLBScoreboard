@@ -36,8 +36,9 @@
 		<!--
 		<i v-if="true" class="fa fa-spinner fa-spin"></i>
 		-->
-		<div v-for="scores in updateNoScore" id="dailyScoreMain" class="container">
-			<strong>{{ scores.description }}</strong>
+		<div v-for="scores in updateAllStarScore" id="dailyScoreMain" class="container">
+			<!--<strong>{{ scores.description }}</strong>-->
+			<AllStar></AllStar>
 		</div>
 		<div v-for="score in updateStoreScoreboard" id="dailyScoreMain" class="container">
 			<div class="row">
@@ -257,13 +258,15 @@
 	import datePicker1 from './datepicker.vue';
 	import datePicker from 'vuejs-datepicker';
 	import LoadingSpinner from './loadingSpinner.vue'
+	import AllStar from './AllStar.vue'
 	//import 'font-awesome/css/font-awesome.css'; 
 	export default {
 		name: 'dailyScores',
 		components: {
 			datePicker,
 			datePicker1,
-			LoadingSpinner  		
+			LoadingSpinner,
+			AllStar  		
 			},
 		data () {
 			var updateDailyScore = []
@@ -273,11 +276,7 @@
 				month: "07",
 				day: "15"
 			}
-			var noScoreObj = {
-				render: false,
-				scoreLength: 0,
-				data: {}
-			}
+			var render = true;
 			//var loading = store.state.score.loading
 			var loading = true;
 			var storeDates = {
@@ -296,7 +295,6 @@
 				tempYear, 
 				storeDates,
 				teamInfo, 
-				noScoreObj,
 				data,
 				loading
 			}
@@ -309,14 +307,12 @@
 			updateStoreScoreboard () {
 				//this.teamInfo = store.state.team.teamArray
 				//console.log("teamAray Length: " + this.teamInfo[0].startingIndex)
-				console.log("dailyScores updated: " + JSON.stringify(store.state.score.dailyScores))
-				console.log("dailyScores updated: " + typeof store.state.score.dailyScores)
 				return store.state.score.dailyScores
 			},
-			updateNoScore () {
-				console.log("updateNoScore started " + this.noScoreObj.render)
-				console.log("udpateNoScore " + JSON.stringify(store.state.score.noScoreObj))
-				return store.state.score.noScore
+			updateAllStarScore () {
+				console.log("updateAllStarScore " + JSON.stringify(store.state.score.allStarScore))
+				this.render = false
+				return store.state.score.allStarScore
 			},
 			updateTeamInfo () {
 				this.teamInfo = store.state.team.teamArray 
@@ -333,9 +329,6 @@
 		methods: {
 			getStoreMutations () {
 				store.commit('updateScoreboardNew')
-			},
-			updateNoScore () {
-				this.noScoreObj.render = true
 			},
 			updateTeamInningRange (away, home, inning) {
 				var awayTeamIndex = store.state.team.teamArray.findIndex(team => team.name === away)
@@ -412,7 +405,7 @@
 			},
 			save (date) {
 				this.loading = true;
-				this.noScoreObj.render = false;
+				this.render = true;
 				//Updating store with the new date
 				//store.commit('updateDate', this.storeDates.date) -- for use w/o date picker
 				store.commit('updateDatePicker', this.storeDates.date)
