@@ -36,9 +36,12 @@
 		<!--
 		<i v-if="true" class="fa fa-spinner fa-spin"></i>
 		-->
-		<div v-for="scores in updateAllStarScore" id="dailyScoreMain" class="container">
+		<div v-if="updateAllStarScore" id="dailyScoreMain" class="container">
 			<!--<strong>{{ scores.description }}</strong>-->
-			<AllStar></AllStar>
+			<AllStar :scoreData="allStarScoresComp"></AllStar>
+		</div>
+		<div v-else-if="noGameComp" id="dailyScoreMain" class="container">
+			<strong>NO GAME TODAY!!</strong>
 		</div>
 		<div v-for="score in updateStoreScoreboard" id="dailyScoreMain" class="container">
 			<div class="row">
@@ -276,6 +279,8 @@
 				month: "07",
 				day: "15"
 			}
+			var allStarScores = 'This is a Test'
+			var noGame = 'No Games Today!!'
 			var render = true;
 			//var loading = store.state.score.loading
 			var loading = true;
@@ -296,7 +301,8 @@
 				storeDates,
 				teamInfo, 
 				data,
-				loading
+				loading,
+				allStarScores
 			}
 		},
 		computed: {
@@ -309,10 +315,20 @@
 				//console.log("teamAray Length: " + this.teamInfo[0].startingIndex)
 				return store.state.score.dailyScores
 			},
+			noGameComp () {
+				var noGameCheck = store.state.score.noGame ? true : false
+				return noGameCheck
+			},
+			allStarScoresComp () {
+				//Passes through the all star game data as a prop --this is so it will only show 1 time
+				var allScore = store.state.score.allStarScore.game ? store.state.score.allStarScore : ''
+				return allScore
+			},
+
 			updateAllStarScore () {
-				console.log("updateAllStarScore " + JSON.stringify(store.state.score.allStarScore))
-				this.render = false
-				return store.state.score.allStarScore
+				//if there is All Star game data stored in Store, will show Allstar component
+				var shouldShow = store.state.score.allStarScore.game ? true : false;
+				return shouldShow
 			},
 			updateTeamInfo () {
 				this.teamInfo = store.state.team.teamArray 

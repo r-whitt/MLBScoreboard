@@ -33,102 +33,126 @@ var store = new Vuex.Store ({
 
 
 var scores = {
-	state: {
-		message: 'Test Message-New Store',
-		loading: false,
-		messageArray: [
-			{id: 1, message: "1st message", show: true},
-			{id: 2, message: "2nd message", show: false}
-		],
-		dailyScores: [],
-		allStarScore: [],
-		dateObject: {
-			year: "2017",
-			month: "07",
-			day: "15"
-		},
-		storeTempDate: new Date()
-	},
-	getters: {
-		messageFilter (state) {
-			return scores.state.messageArray.filter(message => message.show)
-		}
-	},
-	mutations: {
-		udpateState(store, message) {
-			scores.state.message += message
-		},
-		updateScoreboardNew (store) {
-			scores.state.loading = true;
-			//Uses the new date to configure URL and update api call for scoreboard
-			var url = ("http://gd2.mlb.com/components/game/mlb/year_" + scores.state.dateObject.year + "/month_" + scores.state.dateObject.month + "/day_" + scores.state.dateObject.day + "/master_scoreboard.json")
-			console.log("URL is: " + url) 
-			var previousRequest = ""
-			Vue.http.get(url, {
-				before(request) {
-					if(previousRequest.length > 0) {
-						previousRequest.abort();
-						console.log("ABORTED previous request")
-					}
-					previousRequest = JSON.stringify(request)
-					//console.log("previousRequest: " + previousRequest.length)
-				}
-				
-			}).then(response => {
-				//scores.state.loading = false;
-				console.log("url: " + url)
-				//console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
-				//	console.log("in store then " + JSON.stringify(response.body.data.games))
-				if (response.body.data.games.game.length > 1) {
-					scores.state.dailyScores = response.body.data.games.game;
-					console.log("store games length1 " + scores.state.dailyScores.length);
-        		} else {
-					scores.state.allStarScore = response.body.data.games;
-					//console.log("store state all star: " + JSON.stringify(scores.state.allStarScore[0].game.description));
-				}
-			}, response => {
-				//scores.state.loading = false;
-				console.log("vue resource had an error: " + url + "\n" + "response is: " + response)
-			})
-		},
-		updateLoader(store, boolean) {
-			console.log("vuex received: " + boolean)
-			scores.state.loading = boolean
-		},
-		resetTeamIndexes () {
-			teamInfo.state.teamArray.forEach(function(element) {
-				element.startingIndex = 0;
-				element.endingIndex = 9;
-				element.starting = true;
-			})
-		},
-		clearScores(store) {
-			scores.state.dailyScores = [];
-			scores.state.allStarScore = []
-		},
-		updateDatePicker (store, timeObject) {
-			//Used with the Datepicker v:on=closed
-			scores.state.dateObject.year = timeObject.getFullYear();
-			var tempMonth = timeObject.getMonth() + 1;
-			var tempDay = timeObject.getDate();
-			scores.state.dateObject.month = tempMonth > 9 ? tempMonth : "".concat(0, tempMonth)
-			//console.log("Month is: " + scores.state.dateObject.month + "TempDay is: " + tempDay)
-			scores.state.dateObject.day = tempDay > 9 ? tempDay : "".concat(0, tempDay)
-			//console.log("Day is: " + scores.state.dateObject.day + "tempDay is: " + tempDay)
-			//console.log("Store date: " + scores.state.dateObject.month + "\ " + scores.state.dateObject.day + "\ " + scores.state.dateObject.year)
-			//console.log("datePicker about to fetch new scores")
-			scores.mutations.resetTeamIndexes()
-			scores.mutations.clearScores()
-			scores.mutations.updateScoreboardNew()
-		},
-		updateDate(store, timeObject) {
-			//Used with no datepicker (save button)
-			scores.state.dateObject.year = timeObject.getFullYear(),
-			scores.state.dateObject.month = timeObject.getMonth() + 1,
-			scores.state.dateObject.day = timeObject.getDate()
-		}
-	}
-}
+  state: {
+    message: "Test Message-New Store",
+    noGame: false,
+    loading: false,
+    messageArray: [
+      { id: 1, message: "1st message", show: true },
+      { id: 2, message: "2nd message", show: false }
+    ],
+    dailyScores: [],
+    allStarScore: [],
+    storeTempDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+    dateObject: {
+      year: new Date(new Date().setDate(new Date().getDate() - 1)).getFullYear(),
+      month: new Date(new Date().setDate(new Date().getDate() - 1)).getMonth() + 1,
+      day: new Date(new Date().setDate(new Date().getDate() - 1)).getDate()
+    }
+  },
+  getters: {
+    messageFilter(state) {
+      return scores.state.messageArray.filter(message => message.show);
+    }
+  },
+  mutations: {
+    udpateState(store, message) {
+      scores.state.message += message;
+    },
+    updateScoreboardNew(store) {
+	  scores.state.loading = true;
+	  var urlDay = scores.state.dateObject.day < 10 ? "".concat(0, scores.state.dateObject.day) : scores.state.dateObject.day;
+	  var urlMonth = scores.state.dateObject.month < 10 ? "".concat(0, scores.state.dateObject.month) : scores.state.dateObject.month;
+      //Uses the new date to configure URL and update api call for scoreboard
+      var url =
+        "http://gd2.mlb.com/components/game/mlb/year_" +
+        scores.state.dateObject.year +
+        "/month_" +
+        urlMonth +
+        "/day_" +
+        urlDay +
+        "/master_scoreboard.json";
+      console.log("URL is: " + url);
+      var previousRequest = "";
+      Vue.http
+        .get(url, {
+          before(request) {
+            if (previousRequest.length > 0) {
+              previousRequest.abort();
+              console.log("ABORTED previous request");
+            }
+            previousRequest = JSON.stringify(request);
+            //console.log("previousRequest: " + previousRequest.length)
+          }
+        })
+        .then(
+          response => {
+            //scores.state.loading = false;
+            console.log("url: " + url);
+            //console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
+            //	console.log("in store then " + JSON.stringify(response.body.data.games))
+            if (!response.body.data.games.game) {
+              scores.state.noGame = true;
+            } else if (response.body.data.games.game.length > 1) {
+              scores.state.dailyScores = response.body.data.games.game;
+            } else if (
+              response.body.data.games.game.series == "MLB All-Star Game"
+            ) {
+              scores.state.allStarScore = response.body.data.games;
+              //console.log("store state all star: " + JSON.stringify(scores.state.allStarScore[0].game.description));
+            } else {
+              console.log("Store no UpdateScoreBoardNew didn't return a case");
+            }
+          },
+          response => {
+            //scores.state.loading = false;
+            console.log(
+              "vue resource had an error: " + url + "\n" + "response is: " + JSON.stringify(response)
+            );
+          }
+        );
+    },
+    updateLoader(store, boolean) {
+      console.log("vuex received: " + boolean);
+      scores.state.loading = boolean;
+    },
+    resetTeamIndexes() {
+      teamInfo.state.teamArray.forEach(function(element) {
+        element.startingIndex = 0;
+        element.endingIndex = 9;
+        element.starting = true;
+      });
+    },
+    clearScores(store) {
+      scores.state.dailyScores = [];
+      scores.state.allStarScore = [];
+      scores.state.noGame = false;
+    },
+    updateDatePicker(store, timeObject) {
+      //Used with the Datepicker v:on=closed
+      scores.state.dateObject.year = timeObject.getFullYear();
+      var tempMonth = timeObject.getMonth() + 1;
+      var tempDay = timeObject.getDate();
+      scores.state.dateObject.month =
+        tempMonth > 9 ? tempMonth : "".concat(0, tempMonth);
+      //console.log("Month is: " + scores.state.dateObject.month + "TempDay is: " + tempDay)
+      scores.state.dateObject.day =
+        tempDay > 9 ? tempDay : "".concat(0, tempDay);
+      //console.log("Day is: " + scores.state.dateObject.day + "tempDay is: " + tempDay)
+      //console.log("Store date: " + scores.state.dateObject.month + "\ " + scores.state.dateObject.day + "\ " + scores.state.dateObject.year)
+      //console.log("datePicker about to fetch new scores")
+      scores.mutations.resetTeamIndexes();
+      scores.mutations.clearScores();
+      scores.mutations.updateScoreboardNew();
+    },
+    updateDate(store, timeObject) {
+      //Used with no datepicker (save button)
+      (scores.state.dateObject.year = timeObject.getFullYear()),
+        (scores.state.dateObject.month = timeObject.getMonth() + 1),
+        (scores.state.dateObject.day = timeObject.getDate());
+    }
+  }
+};
 
 var teamInfo = {
 	state: {

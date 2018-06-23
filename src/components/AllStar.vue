@@ -1,7 +1,11 @@
 <template>
 	<div>
-		<div v-for="scores in updateAllStarScore" id="dailyScoreMain" class="container">
-			<strong>{{ scores.description }}</strong>
+		<div v-if="updateAllStarScore" id="dailyScoreMain" class="container">
+			<!--<strong>{{ scores.description }}</strong>-->
+			<strong>{{ scoreData.game.description }}</strong>
+			<br>
+			<strong>Box Scores Coming Soon!!!</strong>
+			<!-- scoreData.game has all game data so you can show later if desired --> 
 		</div>
 	</div>
 </template>
@@ -11,13 +15,16 @@
 
     	export default {
 		name: 'allStar',
+		props: [
+			'scoreData' //All Star Game Object from dailyScore pass through property
+		],
 		components: {		
 			},
 		data () {
 			var updateDailyScore = []
 			//var loading = store.state.score.loading
 			var loading = true;
-			var render = true;
+			var render
 			var data = {}
 			var teamInfo = []
 			return {
@@ -34,13 +41,12 @@
 				return this.loading
 			},
 			updateStoreScoreboard () {
-				//this.teamInfo = store.state.team.teamArray
-				//console.log("teamAray Length: " + this.teamInfo[0].startingIndex)
 				return store.state.score.dailyScores
 			},
 			updateAllStarScore () {
-				console.log("updateAllStarScore " + JSON.stringify(store.state.score.allStarScoren))
-				return store.state.score.allStarScore
+				var shouldShow = store.state.score.allStarScore ? true : false;
+				return shouldShow
+
 			},
 			updateTeamInfo () {
 				this.teamInfo = store.state.team.teamArray 
