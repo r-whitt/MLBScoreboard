@@ -45,10 +45,12 @@ var scores = {
     allStarScore: [],
     storeTempDate: new Date(new Date().setDate(new Date().getDate() - 1)),
     dateObject: {
+      full: new Date(new Date().setDate(new Date().getDate() - 1)),
       year: new Date(new Date().setDate(new Date().getDate() - 1)).getFullYear(),
       month: new Date(new Date().setDate(new Date().getDate() - 1)).getMonth() + 1,
       day: new Date(new Date().setDate(new Date().getDate() - 1)).getDate()
-    }
+    },
+    scoresURL: ''
   },
   getters: {
     messageFilter(state) {
@@ -59,12 +61,14 @@ var scores = {
     udpateState(store, message) {
       scores.state.message += message;
     },
-    updateScoreboardNew(store) {
-	  scores.state.loading = true;
-	  var urlDay = scores.state.dateObject.day < 10 ? "".concat(0, scores.state.dateObject.day) : scores.state.dateObject.day;
-	  var urlMonth = scores.state.dateObject.month < 10 ? "".concat(0, scores.state.dateObject.month) : scores.state.dateObject.month;
+    updateURL () {
+      //verifying the month/day variables are the proper size 
+      var tempDay = parseInt(scores.state.dateObject.day, 10) //REmoves leading 0 when selecting new date
+      var urlDay = tempDay < 10 ? "".concat(0, tempDay) : tempDay;
+      var tempMonth = parseInt(scores.state.dateObject.month, 10) //Removes leading 0 when selecting new date
+      var urlMonth = (tempMonth < 10) ? "".concat(0, tempMonth) : tempMonth;
       //Uses the new date to configure URL and update api call for scoreboard
-      var url =
+      scores.state.scoresURL =
         "http://gd2.mlb.com/components/game/mlb/year_" +
         scores.state.dateObject.year +
         "/month_" +
@@ -72,10 +76,14 @@ var scores = {
         "/day_" +
         urlDay +
         "/master_scoreboard.json";
-      console.log("URL is: " + url);
+    },
+    updateScoreboardNew(store) {
+      scores.state.loading = true;
+      scores.mutations.updateURL()
+      console.log("URL is: " + scores.state.scoresURL);
       var previousRequest = "";
       Vue.http
-        .get(url, {
+        .get(scores.state.scoresURL, {
           before(request) {
             if (previousRequest.length > 0) {
               previousRequest.abort();
@@ -88,7 +96,7 @@ var scores = {
         .then(
           response => {
             //scores.state.loading = false;
-            console.log("url: " + url);
+            console.log("url: " + scores.state.scoresURL);
             //console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
             //	console.log("in store then " + JSON.stringify(response.body.data.games))
             if (!response.body.data.games.game) {
@@ -107,7 +115,7 @@ var scores = {
           response => {
             //scores.state.loading = false;
             console.log(
-              "vue resource had an error: " + url + "\n" + "response is: " + JSON.stringify(response)
+              "vue resource had an error: " + scores.state.scoresURL + "\n" + "response is: " + JSON.stringify(response)
             );
           }
         );

@@ -258,16 +258,14 @@
 
 <script>
 	import store from '../store.js';
-	import datePicker1 from './datepicker.vue';
 	import datePicker from 'vuejs-datepicker';
 	import LoadingSpinner from './loadingSpinner.vue'
 	import AllStar from './AllStar.vue'
-	//import 'font-awesome/css/font-awesome.css'; 
+
 	export default {
 		name: 'dailyScores',
 		components: {
 			datePicker,
-			datePicker1,
 			LoadingSpinner,
 			AllStar  		
 			},
@@ -285,12 +283,7 @@
 			//var loading = store.state.score.loading
 			var loading = true;
 			var storeDates = {
-				date: new Date(2017, 6, 15)
-			}
-			var storeDates1 = {
-				year: "", 
-				month: "",
-				day: ""
+				date: new Date(2017, 11, 15)
 			}
 			var data = {}
 			var teamInfo = []
@@ -345,6 +338,10 @@
 		methods: {
 			getStoreMutations () {
 				store.commit('updateScoreboardNew')
+			},
+			getInitDate () {
+				this.storeDates.date = store.state.score.dateObject.full
+				console.log("getInitDate ran")
 			},
 			updateTeamInningRange (away, home, inning) {
 				var awayTeamIndex = store.state.team.teamArray.findIndex(team => team.name === away)
@@ -455,6 +452,7 @@
 		},
 		beforeMount () {
 			this.getStoreMutations();
+			this.getInitDate();
 			this.loading = true;
 		},
 		mounted () {

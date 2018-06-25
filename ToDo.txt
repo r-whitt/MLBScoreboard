@@ -1,14 +1,13 @@
 4/11/18
-5) Make No Score Display Something?
 6) Either Disable Current Date & Future Dates or have them show construction pages and not the normal historcal data scores
-9) Add Current Date (Date that will pull first) as yesterday (current - 1 day)
-4) Add Loading Wheel? - work on loading spinner when updating
-3)Pretty up Date Picker? 
+3) Pretty up Date Picker? 
 	Make a border that it fits in or an image that it fits in? 
-4)Add toolkits when hovering
+4) Add toolkits when hovering
+5) Make compatable for small/mobile screens --> New Branch
 8) add Postponed logic to prevent score tables from showing? July 5th, 2017 - Mets Nationals
 10) Refactor code - Remove Console.logs, remove test functions/variables, add A LOT of comments to help other people reading code
 11) Add ReadMe to walk through how to setup (install vue-resources, wheel loading library too?)
+4) Work on loading spinner when updating??
 
 
 
