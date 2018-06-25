@@ -4,8 +4,16 @@
 			<!-- Date Picker & Date Header --> 
 			<div class="container-fluid">
 				<div class="row">
+					<!-- Working Date Picker 
 					<div class="col-md-4" style="margin-left: -30px">
 						<datePicker placeholder="Select Date" v-model="storeDates.date" v-on:closed="save"></datePicker>
+					</div>
+					-->
+					<div class="col-md-4" style="margin-left: -30px">
+						<datePicker2 lang="en" 
+							:not-after="new Date(new Date().setDate(new Date().getDate()-1))" 
+							v-on:closed="save"
+							v-model="storeDates.date"></datePicker2>
 					</div>
 					<div class="col-sm-1"></div>
 					<div id="longDate" class="col-md-4" v-model="getDate">
@@ -259,6 +267,7 @@
 <script>
 	import store from '../store.js';
 	import datePicker from 'vuejs-datepicker';
+	import datePicker2 from 'vue2-datepicker'
 	import LoadingSpinner from './loadingSpinner.vue'
 	import AllStar from './AllStar.vue'
 
@@ -266,6 +275,7 @@
 		name: 'dailyScores',
 		components: {
 			datePicker,
+			datePicker2,
 			LoadingSpinner,
 			AllStar  		
 			},
