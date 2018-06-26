@@ -12,8 +12,8 @@
 					<div class="col-md-4" style="margin-left: -30px">
 						<datePicker2 lang="en" 
 							:not-after="new Date(new Date().setDate(new Date().getDate()-1))" 
-							v-on:closed="save"
-							v-model="storeDates.date"></datePicker2>
+							v-model="datePicker2"
+							></datePicker2>
 					</div>
 					<div class="col-sm-1"></div>
 					<div id="longDate" class="col-md-4" v-model="getDate">
@@ -336,6 +336,18 @@
 			updateTeamInfo () {
 				this.teamInfo = store.state.team.teamArray 
 			},
+			datePicker2: {
+				get: () => {
+					console.log("datePicker2 get starting")
+					return store.state.score.dateObject.full
+				},
+				set: date => {
+					console.log("datePicker2 set starting")
+					//this.storeDates.date = date
+					console.log("datepicker2 set " + new Date(date))
+					store.commit('updateDatePicker', date)
+				}
+			},
 			getDate() {
 				/*
 				this.storeDates.year = store.state.score.dateObject.year
@@ -427,6 +439,7 @@
 				return showLeft
 			},
 			save (date) {
+				console.log("Save starting")
 				this.loading = true;
 				this.render = true;
 				//Updating store with the new date

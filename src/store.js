@@ -43,14 +43,14 @@ var scores = {
     ],
     dailyScores: [],
     allStarScore: [],
-    storeTempDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+    storeTempDate: new Date(new Date().setDate(new Date().getDate())),
     dateObject: {
       full: new Date(new Date().setDate(new Date().getDate() - 1)),
       year: new Date(new Date().setDate(new Date().getDate() - 1)).getFullYear(),
       month: new Date(new Date().setDate(new Date().getDate() - 1)).getMonth() + 1,
       day: new Date(new Date().setDate(new Date().getDate() - 1)).getDate()
     },
-    scoresURL: ''
+    scoresURL: '',
   },
   getters: {
     messageFilter(state) {
