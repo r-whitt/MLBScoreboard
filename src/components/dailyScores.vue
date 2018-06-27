@@ -12,6 +12,7 @@
 					<div class="col-md-4" style="margin-left: -30px">
 						<datePicker2 lang="en" 
 							:not-after="new Date(new Date().setDate(new Date().getDate()-1))" 
+							@change="getInitDate"
 							v-model="datePicker2"
 							></datePicker2>
 					</div>
@@ -270,7 +271,6 @@
 	import datePicker2 from 'vue2-datepicker'
 	import LoadingSpinner from './loadingSpinner.vue'
 	import AllStar from './AllStar.vue'
-
 	export default {
 		name: 'dailyScores',
 		components: {
@@ -301,6 +301,14 @@
 				updateDailyScore,
 				length,
 				tempYear, 
+				shortcuts: [
+					{
+						onClick: () => {
+							console.log('onClick ran')
+							this.storeDates.date = date
+						}
+					}
+				],
 				storeDates,
 				teamInfo, 
 				data,
@@ -327,7 +335,6 @@
 				var allScore = store.state.score.allStarScore.game ? store.state.score.allStarScore : ''
 				return allScore
 			},
-
 			updateAllStarScore () {
 				//if there is All Star game data stored in Store, will show Allstar component
 				var shouldShow = store.state.score.allStarScore.game ? true : false;
@@ -363,7 +370,8 @@
 			},
 			getInitDate () {
 				this.storeDates.date = store.state.score.dateObject.full
-				console.log("getInitDate ran")
+				console.log("getInitDate ran " + this.storeDates.date)
+				console.log("getInitDate store " + store.state.score.dateObject.full)
 			},
 			updateTeamInningRange (away, home, inning) {
 				var awayTeamIndex = store.state.team.teamArray.findIndex(team => team.name === away)

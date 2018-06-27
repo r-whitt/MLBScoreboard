@@ -80,7 +80,7 @@ var scores = {
     updateScoreboardNew(store) {
       scores.state.loading = true;
       scores.mutations.updateURL()
-      console.log("URL is: " + scores.state.scoresURL);
+      //console.log("URL is: " + scores.state.scoresURL);
       var previousRequest = "";
       Vue.http
         .get(scores.state.scoresURL, {
@@ -138,6 +138,7 @@ var scores = {
     },
     updateDatePicker(store, timeObject) {
       //Used with the Datepicker v:on=closed
+      scores.state.dateObject.full = timeObject
       scores.state.dateObject.year = timeObject.getFullYear();
       var tempMonth = timeObject.getMonth() + 1;
       var tempDay = timeObject.getDate();
