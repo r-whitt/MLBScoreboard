@@ -345,13 +345,9 @@
 			},
 			datePicker2: {
 				get: () => {
-					console.log("datePicker2 get starting")
 					return store.state.score.dateObject.full
 				},
 				set: date => {
-					console.log("datePicker2 set starting")
-					//this.storeDates.date = date
-					console.log("datepicker2 set " + new Date(date))
 					store.commit('updateDatePicker', date)
 				}
 			},
@@ -370,8 +366,6 @@
 			},
 			getInitDate () {
 				this.storeDates.date = store.state.score.dateObject.full
-				console.log("getInitDate ran " + this.storeDates.date)
-				console.log("getInitDate store " + store.state.score.dateObject.full)
 			},
 			updateTeamInningRange (away, home, inning) {
 				var awayTeamIndex = store.state.team.teamArray.findIndex(team => team.name === away)

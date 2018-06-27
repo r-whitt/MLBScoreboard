@@ -1,7 +1,6 @@
 4/11/18
-6) Either Disable Current Date & Future Dates or have them show construction pages and not the normal historcal data scores
-3) Pretty up Date Picker? 
-	Make a border that it fits in or an image that it fits in? 
+3) Remove old DatePicker code 
+	use @change save instead of computed get/set?
 4) Add toolkits when hovering
 5) Make compatable for small/mobile screens --> New Branch
 8) add Postponed logic to prevent score tables from showing? July 5th, 2017 - Mets Nationals
