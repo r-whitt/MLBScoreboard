@@ -14,7 +14,13 @@
 							:not-after="new Date(new Date().setDate(new Date().getDate()-1))" 
 							@change="getInitDate"
 							v-model="datePicker2"
+							data-toggle="tooltip"
+							data-placement="bottom"
+							title="Past Dates Only. Current/Future scores coming soon!"
 							></datePicker2>
+					</div>
+					<div class="tooltip">Test
+						<span class="tooltiptext">CSS Test Tooltip</span>
 					</div>
 					<div class="col-sm-1"></div>
 					<div id="longDate" class="col-md-4" v-model="getDate">
@@ -481,6 +487,9 @@
 			this.loading = true;
 		},
 		mounted () {
+			$(function(){
+				$('[data-toggle="tooltip"]').tooltip();
+			});
 		},
 		beforeUpdate () {
 		},
