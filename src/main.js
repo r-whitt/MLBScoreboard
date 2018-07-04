@@ -12,15 +12,18 @@ import App from './App'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 
-import Hello from './components/HelloWorld.vue'
 import dailyScores from './components/dailyScores.vue'
+import schedule from './components/schedule.vue'
+import loadingSpinner from "./components/loadingSpinner.vue";
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
 const routes = [
 	{path: '/', component: dailyScores},
-	{path: '/home', component: dailyScores}
+  {path: '/scores', component: dailyScores},
+  {path: '/schedule', component: schedule},
+  {path: '/loadingSpinner', component: loadingSpinner}
 ]
 
 const router = new VueRouter ({
