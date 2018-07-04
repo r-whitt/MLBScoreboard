@@ -4,18 +4,16 @@
 			<!-- Date Picker & Date Header --> 
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-4" style="margin-left: -30px">
-						<datePicker2 lang="en" 
+					<div class="col-md-4" style="margin-left: -30px"
+					data-toggle="tooltip"
+					data-placement="left"
+					title="Past Dates Only. Current/Future scores coming soon!"
+					>
+						<datePicker lang="en" 
 							:not-after="new Date(new Date().setDate(new Date().getDate()-1))" 
 							@change="getInitDate"
-							v-model="datePicker2"
-							data-toggle="tooltip"
-							data-placement="bottom"
-							title="Past Dates Only. Current/Future scores coming soon!"
-							></datePicker2>
-					</div>
-					<div class="tooltip">Test
-						<span class="tooltiptext">CSS Test Tooltip</span>
+							v-model="datePicker"
+							></datePicker>
 					</div>
 					<div class="col-sm-1"></div>
 					<div id="longDate" class="col-md-4">
@@ -271,15 +269,13 @@
 
 <script>
 	import store from '../store.js';
-	import datePicker from 'vuejs-datepicker';
-	import datePicker2 from 'vue2-datepicker'
+	import datePicker from 'vue2-datepicker'
 	import LoadingSpinner from './loadingSpinner.vue'
 	import AllStar from './AllStar.vue'
 	export default {
 		name: 'dailyScores',
 		components: {
 			datePicker,
-			datePicker2,
 			LoadingSpinner,
 			AllStar  		
 			},
@@ -347,7 +343,7 @@
 			updateTeamInfo () {
 				this.teamInfo = store.state.team.teamArray 
 			},
-			datePicker2: {
+			datePicker: {
 				get: () => {
 					return store.state.score.dateObject.full
 				},
