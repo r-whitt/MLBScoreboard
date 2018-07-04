@@ -4,11 +4,6 @@
 			<!-- Date Picker & Date Header --> 
 			<div class="container-fluid">
 				<div class="row">
-					<!-- Working Date Picker 
-					<div class="col-md-4" style="margin-left: -30px">
-						<datePicker placeholder="Select Date" v-model="storeDates.date" v-on:closed="save"></datePicker>
-					</div>
-					-->
 					<div class="col-md-4" style="margin-left: -30px">
 						<datePicker2 lang="en" 
 							:not-after="new Date(new Date().setDate(new Date().getDate()-1))" 
@@ -23,7 +18,7 @@
 						<span class="tooltiptext">CSS Test Tooltip</span>
 					</div>
 					<div class="col-sm-1"></div>
-					<div id="longDate" class="col-md-4" v-model="getDate">
+					<div id="longDate" class="col-md-4">
 						<label>{{ storeDates.date.toLocaleString("en-us", { month: "long" }) }}</label>
 						<label> {{ storeDates.date.getDate() }}, </label>
 						<label>{{ storeDates.date.getFullYear() }}</label>
@@ -108,6 +103,7 @@
 						<!-- Innings for < 11 Innigs --> 
 						<table v-if="score.status.inning < 11" id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
+								<!-- Inning # header -->
 								<tr id="tableRow">
 									<th></th>
 									<th id="inning" v-for="(inning, index) in score.linescore.inning">{{ index + 1 }}</th>
@@ -117,6 +113,7 @@
 							<tbody>
 								<tr id="tableRow" height="55px">
 									<td></td>
+									<!-- Away runs scored per inning -->
 									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning">
 										<div v-if="inning.away.length == 0">X</div>
 										<div v-else>{{ inning.away }}</div>
@@ -125,6 +122,7 @@
 								</tr>
 								<tr id="tableRow" height="55px">
 									<td></td>
+									<!--Home Away scored per inning -->
 									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning">
 										<div v-if="inning.home.length == 0">X</div>
 										<div v-else>{{ inning.home }}</div>
@@ -495,6 +493,9 @@
 		},
 		updated () {
 			this.loading = false;
+			$(function(){
+				$('[data-toggle="tooltip"]').tooltip();
+			});
 		}
 	}
 </script>

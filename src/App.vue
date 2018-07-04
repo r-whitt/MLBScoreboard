@@ -13,7 +13,6 @@
           -->
           <li><router-link id="navText" to="/scores">Scores</router-link></li>
           <li><router-link id="navText" to="/schedule">Schedule</router-link></li>
-          <li><router-link id="navText" to="/loadingSpinner">Loading Example</router-link></li>
         </ul>
       </div>
     </nav>
