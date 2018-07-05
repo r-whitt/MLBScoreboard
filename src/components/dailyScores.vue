@@ -51,219 +51,7 @@
 		<div v-else-if="noGameComp" id="dailyScoreMain" class="container">
 			<strong>NO GAME TODAY!!</strong>
 		</div>
-		<div v-for="score in updateStoreScoreboard" id="dailyScoreMain" class="container">
-			<div class="row">
-				<div class="col">
-					<!-- To Center the scores -->
-					<div class="col-sm-3"></div>
-						<!-- ADD CAUSE FOR NO GAMES HERE --> 
-					<div id="divTable" class="container col-md-2" style="margin-right:-75px">
-						<!-- Team Names, record, etc -->
-						<table id="boxscores" class="table table-borderless">
-							<thead id="tableHead">
-								<tr id="tableRow">
-									<th width="180px">
-										<!-- Status of game - 'final', 'f/10', canceled, etc -->
-										<div colspan="1" id="gameStatus" v-if="score.status.inning > 9">
-											<span v-if="score.status.inning > 9">F/{{ score.status.inning }}</span>
-										</div>
-										<div v-else>
-											<span v-if="score.status.status == 'Completed Early'" id="gameStatus">Weather</span>
-											<span v-else id="gameStatus">{{ score.status.status }}</span>
-										</div>
-										<!-- ADD CONDITION FOR SHORTNED/CANCELD GAMES-->
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr id="tableRow" height="31px">
-									<td margin-right="50px" width="120px">
-									<!-- Away team Name & record -->
-										<b id="teamName">{{ score.away_team_name }}</b>
-										<br>
-										<div id="winLossRecord">({{ score.away_win }} - {{ score.away_loss }})</div>
-									</td>
-								</tr>
-								<tr id="tableRow" height="31px">
-									<!-- Home Team Name & Record --> 
-									<td width="120px">
-										<!-- Home Team name & record -->
-										<b id="teamName">{{ score.home_team_name }}</b>
-										<div id="winLossRecord">({{ score.home_win }} - {{ score.home_loss }})</div>
-									</td>
-								</tr>
-								<tr></tr>
-							</tbody>
-						</table>
-					</div>
-
-					<div id="divTable" class="container col-sm-2" style="margin-left:-10px">
-						<!-- Innings for < 11 Innigs --> 
-						<table v-if="score.status.inning < 11" id="boxscores" class="table table-borderless">
-							<thead id="tableHead">
-								<!-- Inning # header -->
-								<tr id="tableRow">
-									<th></th>
-									<th id="inning" v-for="(inning, index) in score.linescore.inning">{{ index + 1 }}</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr id="tableRow" height="55px">
-									<td></td>
-									<!-- Away runs scored per inning -->
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning">
-										<div v-if="inning.away.length == 0">X</div>
-										<div v-else>{{ inning.away }}</div>
-									</td>
-									<td></td>
-								</tr>
-								<tr id="tableRow" height="55px">
-									<td></td>
-									<!--Home Away scored per inning -->
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning">
-										<div v-if="inning.home.length == 0">X</div>
-										<div v-else>{{ inning.home }}</div>
-									</td>
-									<td></td>
-								</tr>
-								<br>
-							</tbody>
-						</table>
-
-						<!-- Innings for Innings > 10 --> 
-						<table v-else-if="score.status.inning > 10" v-bind="updateTeamInningRange(score.away_team_name, score.home_team_name, score.status.inning)"  id="boxscores" class="table table-borderless">
-							<thead id="tableHead">
-								<tr id="tableRow">
-								<!-- Extra column for buttons -->
-								<th v-if="showLeftArrow(score.away_team_name)">
-									<a style="margin-left:-40px" @click="showEarlierInning(score.away_team_name, score.home_team_name)"><i style="color:black" class="glyphicon glyphicon-chevron-left small"></i></a>
-								</th>
-								<th v-else></th>
-								<th v-if="showRightArrow(score.status.inning, score.away_team_name)">
-									<a style="margin-left:-40px" @click="showLaterInning(score.away_team_name, score.home_team_name)"><i style="color:black" class="glyphicon glyphicon-chevron-right small"></i></a>
-								</th>
-								<th v-else></th>
-								<!--<th v-else></th> -->
-								<th id="inning" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && index <= getAwayEndIndex(score.away_team_name)"><div style="margin-left:-30px">{{ index + 1 }}</div></th>
-							</tr>								
-							</thead>
-							<tbody>
-								<tr id="tableRow" height="55px">
-									<td></td>
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getAwayStartIndex(score.away_team_name) && index <= getAwayEndIndex(score.away_team_name)">
-										{{ inning.away }}
-									</td>
-									<td></td>
-								</tr>
-								<tr id="tableRow" height="55px">
-									<td></td>
-									<td id="inningScore" width="32px" v-for="(inning, index) in score.linescore.inning" v-bind="updateTeamInfo" v-if="index > getHomeStartIndex(score.home_team_name) && index <= getHomeEndIndex(score.home_team_name)">
-										<div v-if="inning.home.length == 0">X</div>
-										<div v-else>{{ inning.home }}</div>
-									</td>
-									<td></td>
-								</tr>
-								<br>
-							</tbody>
-						</table>
-
-						<!-- if the innings in status.inning don't match either of the above --> 
-						<!-- Hopefully no game days will show this --> 
-						<div v-else><span>Innings Didn't match</span></div>
-					</div>
-
-					<div id="divTable" class="container col-sm-1" style="margin-left: 50px">
-						<!-- Summary --> 
-						<table id="boxscores" class="table table-borderless">
-							<thead id="tableHead">
-								<tr id="tableRow">
-									<th id="summary">R</th>
-									<th id="summary">H</th>
-									<th id="summary">E</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-if="!score.linescore">No Linescore in row</tr>
-								<tr v-else id="tableRow" height="55px">
-									<td id="summary" v-bind:class="(parseInt(score.linescore.r.home)<parseInt(score.linescore.r.away)) ? 'win':''">{{ score.linescore.r.away }}</td>
-									<td id="summary">{{ score.linescore.h.away }}</td>
-									<td id="summary">{{ score.linescore.e.away }}</td>
-								</tr>
-								<tr v-if="!score.linescore">No Linescore in row</tr>
-								<tr v-else id="tableRow" height="55px">
-									<td id="summary" v-bind:class="(parseInt(score.linescore.r.home)>parseInt(score.linescore.r.away)) ? 'win':''">{{ score.linescore.r.home }}</td>
-									<td id="summary">{{ score.linescore.h.home }}</td>
-									<td id="summary">{{ score.linescore.e.away }}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<!-- Players of the game after the box score --> 
-					<div id="divTable" class="container col-sm-2" style="margin-left:-5px">
-						<table id="boxscores" class="table table-borderless">
-							<tbody id="playerBox">
-								<tr id="tableRow" height="55px">
-									<td style="margin-bottom: -10px">
-										<img :src=getPitcherPicURL(score.winning_pitcher.id) id="playerPic" class="img-circle">
-									</td>
-									<td>
-										<small><strong>W: {{ score.winning_pitcher.last }}</strong></small>
-										<br><small>({{ score.winning_pitcher.wins }}-{{ score.winning_pitcher.losses }} {{ score.winning_pitcher.era }} ERA)</small>
-									</td>
-								</tr>
-								<tr id="tableRow" height="55px">
-									<td style="width:30px">
-										<img :src=getPitcherPicURL(score.losing_pitcher.id) id="playerPic" class="img-circle">
-									</td>
-									<td>
-										<small><strong>L: {{ score.losing_pitcher.last }}</strong></small>
-										<br><small>({{ score.losing_pitcher.wins }}-{{ score.losing_pitcher.losses }} {{ score.losing_pitcher.era }} ERA)</small>
-									</td>
-								</tr>
-								<tr v-if="score.save_pitcher.id >= 1" id="tableRow" height="55px">
-									<td style="width:30px">
-										<img :src=getPitcherPicURL(score.save_pitcher.id) id="playerPic" class="img-circle">
-									</td>
-									<td>
-										<small><strong>SV: {{ score.save_pitcher.last}}</strong></small>
-										<br><small id="winLossRecord">({{ score.save_pitcher.saves }})</small>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<div id="divTable" class="container col-sm-2" style="margin-left:-45px">
-						<table id="boxscores" class="table table-borderless">
-							<tbody>
-								<tr id="tableRow" height="55px">
-									<td>
-										<div v-if="getHRTitle(score, score.away_code)">
-											<small><strong>AWAY HR:</strong></small>
-										</div>
-										<div v-for="player in getHomerRuns(score)">
-											<td v-if="player.team_code == score.away_code">
-												<small>{{ player.first[0] }} {{ player.last}} ({{ player.std_hr }})</small>
-											</td>
-										</div>
-										<div v-if="getHRTitle(score, score.home_code)">
-											<strong><small>Home HR:</small></strong>
-										</div>
-										<div v-for="player in getHomerRuns(score)">
-											<td v-if="player.team_code == score.home_code">
-												<small>{{ player.first[0] }} {{ player.last}} ({{ player.std_hr }})</small>
-											</td>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
+		<pastScores></pastScores>
 	</div>
 </template>
 
@@ -272,12 +60,15 @@
 	import datePicker from 'vue2-datepicker'
 	import LoadingSpinner from './loadingSpinner.vue'
 	import AllStar from './AllStar.vue'
+	import PastScores from './pastScore.vue'
+
 	export default {
 		name: 'dailyScores',
 		components: {
 			datePicker,
 			LoadingSpinner,
-			AllStar  		
+			AllStar,
+			PastScores  		
 			},
 		data () {
 			var updateDailyScore = []
@@ -363,6 +154,9 @@
 		methods: {
 			getStoreMutations () {
 				store.commit('updateScoreboardNew')
+			},
+			stopLoading	() {
+				this.loading = false;
 			},
 			getInitDate () {
 				this.storeDates.date = store.state.score.dateObject.full
