@@ -4,9 +4,9 @@
 			<div class="row">
 				<div class="col">
 					<!-- To Center the scores -->
-					<div class="col-sm-3"></div>
+					<div class="col-lg-3 col-md-2 col-xs-1"></div>
 						<!-- ADD CAUSE FOR NO GAMES HERE --> 
-					<div id="divTable" class="container col-md-2" style="margin-right:-75px">
+					<div id="divTable" class="container col-lg-2 col-md-2 col-xs-3" style="margin-right:-70px">
 						<!-- Team Names, record, etc -->
 						<table id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
@@ -46,7 +46,7 @@
 						</table>
 					</div>
 
-					<div id="divTable" class="container col-sm-2" style="margin-left:-10px">
+					<div id="divTable" class="container col-lg-2 col-md-2 col-xs-3" style="margin-left:-10px">
 						<!-- Innings for < 11 Innigs --> 
 						<table v-if="score.status.inning < 11" id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
@@ -122,7 +122,7 @@
 						<div v-else><span>Innings Didn't match</span></div>
 					</div>
 
-					<div id="divTable" class="container col-sm-1" style="margin-left: 50px">
+					<div id="divTable" class="container col-lg-1 col-md-2 col-xs-2" style="margin-left: 50px">
 						<!-- Summary --> 
 						<table id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
@@ -396,7 +396,6 @@
 		},
 		beforeMount () {
 			this.getStoreMutations();
-			this.getInitDate();
 			this.loading = true;
 		},
 		mounted () {

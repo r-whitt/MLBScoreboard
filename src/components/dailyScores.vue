@@ -4,12 +4,13 @@
 			<!-- Date Picker & Date Header --> 
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-4" style="margin-left: -30px"
+					<div class="col-md-4 col-xs-4" style="margin-left: -30px"
 					data-toggle="tooltip"
 					data-placement="left"
 					title="Past Dates Only. Current/Future scores coming soon!"
 					>
-						<datePicker lang="en" 
+						<datePicker 
+							lang="en" 
 							:not-after="new Date(new Date().setDate(new Date().getDate()-1))" 
 							@change="getInitDate"
 							v-model="datePicker"
@@ -120,7 +121,6 @@
 			updateStoreScoreboard () {
 				//this.teamInfo = store.state.team.teamArray
 				//console.log("teamAray Length: " + this.teamInfo[0].startingIndex)
-				this.updateDailyScore = store.state.score.dailyScores
 				return store.state.score.dailyScores
 			},
 			noGameComp () {
