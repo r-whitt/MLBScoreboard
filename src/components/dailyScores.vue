@@ -51,7 +51,7 @@
 		<div v-else-if="noGameComp" id="dailyScoreMain" class="container">
 			<strong>NO GAME TODAY!!</strong>
 		</div>
-		<pastScores></pastScores>
+		<pastScores @hook:updated="stopLoading" @hook:created="startLoading"></pastScores>
 	</div>
 </template>
 
@@ -107,6 +107,11 @@
 				allStarScores
 			}
 		},
+		watch: {
+			updateDailyScore: function() {
+				this.loading = false;
+			}
+		},
 		computed: {
 			loadingDOM(){
 				//this.loading = false
@@ -115,6 +120,7 @@
 			updateStoreScoreboard () {
 				//this.teamInfo = store.state.team.teamArray
 				//console.log("teamAray Length: " + this.teamInfo[0].startingIndex)
+				this.updateDailyScore = store.state.score.dailyScores
 				return store.state.score.dailyScores
 			},
 			noGameComp () {
@@ -157,6 +163,9 @@
 			},
 			stopLoading	() {
 				this.loading = false;
+			},
+			startLoading () {
+				this.loading = true;
 			},
 			getInitDate () {
 				this.storeDates.date = store.state.score.dateObject.full
