@@ -170,79 +170,6 @@
 			getInitDate () {
 				this.storeDates.date = store.state.score.dateObject.full
 			},
-			updateTeamInningRange (away, home, inning) {
-				var awayTeamIndex = store.state.team.teamArray.findIndex(team => team.name === away)
-				var homeTeamIndex = store.state.team.teamArray.findIndex(team => team.name === home)
-				if (store.state.team.teamArray[awayTeamIndex].starting == true) {
-					var endingIndex = inning - 1
-					var startIndex = inning - 10
-					store.state.team.teamArray[awayTeamIndex].starting = false
-					var teamIndexObj = {
-					"awayTeamIndex": awayTeamIndex,
-					"homeTeamIndex": homeTeamIndex,
-					"startIndex": startIndex,
-					"endingIndex": endingIndex
-					}
-				} else {
-					var teamIndexObj = {
-						"awayTeamIndex": awayTeamIndex,
-						"homeTeamIndex": homeTeamIndex
-					}
-				}
-				store.commit('updateTeamIndex', teamIndexObj)
-			},
-			showLaterInning (away, home) {
-				var awayTeamIndex2 = store.state.team.teamArray.findIndex(team => team.name === away)
-				var homeTeamIndex2 = store.state.team.teamArray.findIndex(team => team.name === home)
-				var teamIndex2Obj = {
-					"awayTeamIndex": awayTeamIndex2,
-					"homeTeamIndex": homeTeamIndex2
-				}
-				store.commit('showLateInning', teamIndex2Obj)
-			},
-			showEarlierInning (away, home) {
-				var awayTeamIndex3 = store.state.team.teamArray.findIndex(team => team.name === away)
-				var homeTeamIndex3 = store.state.team.teamArray.findIndex(team => team.name === home)
-				var teamIndex3Obj = {
-					"awayTeamIndex": awayTeamIndex3,
-					"homeTeamIndex": homeTeamIndex3
-				}
-				store.commit('showEarlyInning', teamIndex3Obj)
-			},
-			getAwayStartIndex(away) {
-				var awayTeamIndex2 = store.state.team.teamArray.findIndex(team => team.name === away)
-				return store.state.team.teamArray[awayTeamIndex2].startingIndex
-			},
-			getAwayEndIndex(away) {
-				var awayTeamEndIndex2 = store.state.team.teamArray.findIndex(team => team.name === away)
-				return store.state.team.teamArray[awayTeamEndIndex2].endingIndex
-			},
-			getHomeEndIndex(home) {
-				var homeTeamEndIndex2 = store.state.team.teamArray.findIndex(team => team.name === home)
-				return store.state.team.teamArray[homeTeamEndIndex2].endingIndex
-			},
-			getHomeStartIndex(home) {
-				var homeTeamIndex2 = store.state.team.teamArray.findIndex(team => team.name === home)
-				return store.state.team.teamArray[homeTeamIndex2].startingIndex
-			},
-			showRightArrow(score, away) {
-				//console.log("showRightArrow: " + score)
-				var awayArrowIndex = store.state.team.teamArray.findIndex(team => team.name === away)
-				var showRight = store.state.team.teamArray[awayArrowIndex].endingIndex < (score-1)
-				//console.log("showRightArrow: " + showRight)
-				return showRight
-			},
-			getPitcherPicURL(id) {
-				var winULR = "http://content.mlb.com/images/headshots/current/60x60/" + id + ".png"
-				return winULR
-			},
-			showLeftArrow(away) {
-				var awayArrowIndex2 = store.state.team.teamArray.findIndex(team => team.name === away)
-				var showLeft = !(store.state.team.teamArray[awayArrowIndex2].startingIndex == -1)
-				//console.log("showLeftArrow: " + showLeft)
-				//console.log("showLeftArrowStartingIndex: " + store.state.team.teamArray[awayArrowIndex2].startingIndex)
-				return showLeft
-			},
 			save (date) {
 				console.log("Save starting")
 				this.loading = true;
@@ -251,32 +178,6 @@
 				//store.commit('updateDate', this.storeDates.date) -- for use w/o date picker
 				store.commit('updateDatePicker', this.storeDates.date)
 			},
-			winner(score) {
-				if(score.linescore.r.home > score.linescore.r.away) {
-					return "win"
-				}
-			},
-			getHomerRuns(homeRunArray) {
-				if(!homeRunArray.home_runs.player) {
-					return homeRunArray
-				} else {
-					return homeRunArray.home_runs.player
-					console.log(homeRunArray.home_runs.player.length + " number of home runs")
-				}
-			},
-			getHRTitle(homeRunArray, team) {
-				//console.log("length: " + hrArray.length)
-				if(!homeRunArray.home_runs.player) {
-					return false
-				} else {
-					var i;
-					for (i = 0; i < homeRunArray.home_runs.player.length; i++) {
-						if(homeRunArray.home_runs.player[i].team_code == team) {
-							return true
-						} 
-					}
-				}
-			}
 		},
 		beforeMount () {
 			this.getStoreMutations();
