@@ -95,8 +95,7 @@ var scores = {
         })
         .then(
           response => {
-            //scores.state.loading = false;
-            console.log("url: " + scores.state.scoresURL);
+            //console.log("url: " + scores.state.scoresURL);
             //console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
             //	console.log("in store then " + JSON.stringify(response.body.data.games))
             if (!response.body.data.games.game) {

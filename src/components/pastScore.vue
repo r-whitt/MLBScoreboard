@@ -4,7 +4,7 @@
 			<div class="row">
 				<div class="col">
 					<!-- To Center the scores -->
-					<div class="col-lg-3 col-md-2 col-xs-1"></div>
+					<div class="col-lg-3 col-md-2 col-xs-0"></div>
 						<!-- ADD CAUSE FOR NO GAMES HERE --> 
 					<div id="divTable" class="container col-lg-2 col-md-2 col-xs-3" style="margin-right:-70px">
 						<!-- Team Names, record, etc -->
@@ -122,7 +122,7 @@
 						<div v-else><span>Innings Didn't match</span></div>
 					</div>
 
-					<div id="divTable" class="container col-lg-1 col-md-2 col-xs-2" style="margin-left: 50px">
+					<div id="divTableRHE" class="container col-lg-1 col-md-2 col-xs-2">
 						<!-- Summary --> 
 						<table id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
@@ -150,7 +150,7 @@
 					</div>
 
 					<!-- Players of the game after the box score --> 
-					<div id="divTable" class="container col-sm-2" style="margin-left:-5px">
+					<div id="divTable" class="container col-lg-2 col-md-2 col-xs-3" style="margin-left:-5px">
 						<table id="boxscores" class="table table-borderless">
 							<tbody id="playerBox">
 								<tr id="tableRow" height="55px">
@@ -482,5 +482,20 @@
 	}
 	#playerBox {
 		font-size: 13px;
+	}
+	@media (min-width: 992px) and (max-width: 1199px) {
+		#divTableRHE {
+			margin-left: 65px;
+		}
+	}
+	@media only screen and (max-width: 991px) {
+		#divTableRHE {
+			margin-left: 50px;
+		}
+	}
+	@media only screen and (min-width: 1200px) {
+		#divTableRHE {
+			margin-left: 50px;
+		}
 	}
 </style>
