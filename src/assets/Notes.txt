@@ -1,6 +1,3 @@
-4/11/18
-3) Add ReadMe to walk through how to setup (install vue-resources, wheel loading library too?)
-
 Known/Accepted Bugs
 8) add Postponed logic to prevent score tables from showing? July 5th, 2017 - Mets Nationals
 4) Work on loading spinner when updating??
