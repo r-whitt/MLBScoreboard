@@ -46,7 +46,7 @@
 						</table>
 					</div>
 
-					<div id="divTable" class="container col-lg-2 col-md-2 col-xs-3" style="margin-left:-10px">
+					<div id="lineScores" class="container col-lg-2 col-md-2 col-xs-3" >
 						<!-- Innings for < 11 Innigs --> 
 						<table v-if="score.status.inning < 11" id="boxscores" class="table table-borderless">
 							<thead id="tableHead">
@@ -74,7 +74,8 @@
 										<div v-if="inning.home.length == 0">X</div>
 										<div v-else>{{ inning.home }}</div>
 									</td>
-									<td></td>
+									<!-- This is for only 9 inning games so the grey header underline meets the RHE table -->
+									<td style="visibility:hidden">---</td>
 								</tr>
 								<br>
 							</tbody>
@@ -150,7 +151,7 @@
 					</div>
 
 					<!-- Players of the game after the box score --> 
-					<div id="divTable" class="container col-lg-2 col-md-2 col-xs-3" style="margin-left:-5px">
+					<div id="pitchers" class="container col-lg-2 col-md-2 col-xs-3">
 						<table id="boxscores" class="table table-borderless">
 							<tbody id="playerBox">
 								<tr id="tableRow" height="55px">
@@ -184,7 +185,7 @@
 						</table>
 					</div>
 
-					<div id="divTable" class="container col-sm-2" style="margin-left:-45px">
+					<div id="homeRuns" class="container col-sm-2">
 						<table id="boxscores" class="table table-borderless">
 							<tbody>
 								<tr id="tableRow" height="55px">
@@ -416,7 +417,7 @@
 </script>
 
 <style>
-    	#scoreSummary {
+	#scoreSummary {
 		background-color: #D3D3D3;
 		border: 2px solid #D3D3D3;
 		border-radius: 3px;
@@ -485,17 +486,53 @@
 	}
 	@media (min-width: 992px) and (max-width: 1199px) {
 		#divTableRHE {
-			margin-left: 65px;
+			margin-left: 104px;
+		}
+		#boxscores tbody tr td {
+			padding-right: 9px;
+		}
+		#lineScores {
+			margin-left: -10px;
+		}
+		#pitchers {
+			margin-left:-5px
+		}
+		#homeRuns {
+			margin-left:-45px
 		}
 	}
 	@media only screen and (max-width: 991px) {
 		#divTableRHE {
-			margin-left: 50px;
+			margin-left: 77px;
+		}
+		#lineScores {
+			margin-left: -20px;
+		}
+		#boxscores tbody tr td {
+			padding-right: 9px;
+		}
+		#pitchers {
+			margin-left: 0px;
+		}
+		#homeRuns {
+			margin-left: -50px;
 		}
 	}
 	@media only screen and (min-width: 1200px) {
 		#divTableRHE {
-			margin-left: 50px;
+			margin-left: 70px;
+		}
+		#lineScores {
+			margin-left: -10px;
+		}
+		#pitchers {
+			margin-left:-5px
+		}
+		#homeRuns {
+			margin-left:-45px
+		}
+		#boxscores tbody tr td {
+			padding-right: 9px;
 		}
 	}
 </style>
