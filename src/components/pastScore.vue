@@ -3,7 +3,7 @@
         <div v-for="score in updateStoreScoreboard" id="dailyScoreMain" class="container">
 			<div class="row">
 				<div class="col">
-					<!-- To center the scores -->
+					<!-- To Center The Scores -->
 					<div class="col-lg-3 col-md-2 col-xs-0"></div>
 						<!-- ADD CAUSE FOR NO GAMES HERE --> 
 					<div id="divTable" class="container col-lg-2 col-md-2 col-xs-3" style="margin-right:-70px">

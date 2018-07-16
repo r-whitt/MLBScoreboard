@@ -2,7 +2,7 @@
   "name": "mlbscoreboard-heroku",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "Richard Whitt ",
+  "author": "Richard Whitt",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
