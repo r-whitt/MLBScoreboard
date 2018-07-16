@@ -1,36 +1,33 @@
-var jsonfile = require('jsonfile')
-var async = require('async')
-var request = require('request');
-var moment = require('moment');
-var _ = require('lodash');
-var moment = require('moment');
+const jsonfile = require('jsonfile');
+const request = require('request');
+const _ = require('lodash');
 
-var config = {
+let config = {
 	protocol: "http://",
 	baseURL: "gd2.mlb.com/components/game/mlb/"
-}
+};
 
 //used to input in the URL to get appropriate date
-var mlbDate = {
+const mlbDate = {
 	year: "2017",
 	month: "07",
 	day: "15"
-}
+};
 
-if(mlbDate.month.length != 2) {
+if(mlbDate.month.length !== 2) {
 	return console.log("Month isn't proper size. Ex: January = 01 " + mlbDate.month)
 }
 
-if(mlbDate.day.length != 2){
+if(mlbDate.day.length !== 2){
 	return console.log("Day isn't proper size. Ex: 1st = 01")
 }
 
 //Path to config file that will be loaded
-var configFile = './config.json'
+const configFile = './config.json';
 
-//Verifying config is populated 
+//Verifying config is populated
 try {
-    var loadedConfig = jsonfile.readFileSync(configFile, { throws: true });
+  const loadedConfig = jsonfile.readFileSync(configFile, { throws: true });
     config = _.defaults(loadedConfig, config);
 } catch(e) {
     console.log('ERROR LOADING config.json -- make sure it exists ', e)
@@ -40,13 +37,13 @@ if(!config) {
     console.log('No config file found at: ' + configFilePath)
 }
 
-console.log("Config setup is: " + '\n' + JSON.stringify(config))
+console.log("Config setup is: " + '\n' + JSON.stringify(config));
 
 //Getting the master_scoreboard.json from MLB.com
 //Sample URL: http://gd2.mlb.com/components/game/mlb/year_2017/month_07/day_15/master_scoreboard.json
-var data = null
+let data = null;
 function getMasterScoreboard (date, callback) {
-	var uri = (config.protocol + config.baseURL + "year_" + mlbDate.year + "/month_" + mlbDate.month + "/day_" + mlbDate.day + "/master_scoreboard.json")
+  const uri = (config.protocol + config.baseURL + "year_" + mlbDate.year + "/month_" + mlbDate.month + "/day_" + mlbDate.day + "/master_scoreboard.json");
 	request({uri, json: true}, function(error, response, body) {
 		if(error) {
 			console.log("Error in getMasterScoreboard " + '\n' + "URL: " + uri + '\n' + "Error is: " + error)
@@ -81,8 +78,8 @@ function showGames (data) {
 }
 */
 
-getMasterScoreboard(mlbDate)
+getMasterScoreboard(mlbDate);
 
-console.log("data is: " + data)
+console.log("data is: " + data);
 
-module.exports = getMasterScoreboard2()
+module.exports = getMasterScoreboard2();

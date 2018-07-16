@@ -1,38 +1,15 @@
-import Vuex from 'vuex';
-import Vue from 'vue';
+import Vuex from 'vuex'
+import Vue from 'vue'
 import VueResource from 'vue-resource'
 import dailyScores from './components/dailyScores.vue'
 //import score from './js/mlbApp/score.js'
-Vue.use(VueResource)
+Vue.use(VueResource);
 
 //import mlb from './js/mlbApp/app.js'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-var store = new Vuex.Store ({
-	state: {
-		data: {
-			message: 'Test Message',
-			scores: [],
-			year: "2017",
-			month: "07",
-			day: "15"
-		}
-	},
-	mutations: {
-		updateState(state, message){
-			state.data.message += message
-		},
-		/*
-		updateScores (year, month, day, callback) {
-			state.data.scores = getMasterScoreboard(year, month, day)
-		}
-		*/
-	}
-})
-
-
-var scores = {
+const scores = {
   state: {
     message: "Test Message-New Store",
     noGame: false,
@@ -62,11 +39,11 @@ var scores = {
       scores.state.message += message;
     },
     updateURL () {
-      //verifying the month/day variables are the proper size 
-      var tempDay = parseInt(scores.state.dateObject.day, 10) //REmoves leading 0 when selecting new date
-      var urlDay = tempDay < 10 ? "".concat(0, tempDay) : tempDay;
-      var tempMonth = parseInt(scores.state.dateObject.month, 10) //Removes leading 0 when selecting new date
-      var urlMonth = (tempMonth < 10) ? "".concat(0, tempMonth) : tempMonth;
+      //verifying the month/day variables are the proper size
+      const tempDay = parseInt(scores.state.dateObject.day, 10) //REmoves leading 0 when selecting new date
+      const urlDay = tempDay < 10 ? "".concat(0, tempDay) : tempDay;
+      const tempMonth = parseInt(scores.state.dateObject.month, 10) //Removes leading 0 when selecting new date
+      const urlMonth = (tempMonth < 10) ? "".concat(0, tempMonth) : tempMonth;
       //Uses the new date to configure URL and update api call for scoreboard
       scores.state.scoresURL =
         "http://gd2.mlb.com/components/game/mlb/year_" +
@@ -79,9 +56,9 @@ var scores = {
     },
     updateScoreboardNew(store) {
       scores.state.loading = true;
-      scores.mutations.updateURL()
+      scores.mutations.updateURL();
       //console.log("URL is: " + scores.state.scoresURL);
-      var previousRequest = "";
+      let previousRequest = "";
       Vue.http
         .get(scores.state.scoresURL, {
           before(request) {
@@ -103,7 +80,7 @@ var scores = {
             } else if (response.body.data.games.game.length > 1) {
               scores.state.dailyScores = response.body.data.games.game;
             } else if (
-              response.body.data.games.game.series == "MLB All-Star Game"
+              response.body.data.games.game.series === "MLB All-Star Game"
             ) {
               scores.state.allStarScore = response.body.data.games;
               //console.log("store state all star: " + JSON.stringify(scores.state.allStarScore[0].game.description));
@@ -139,8 +116,8 @@ var scores = {
       //Used with the Datepicker v:on=closed
       scores.state.dateObject.full = timeObject
       scores.state.dateObject.year = timeObject.getFullYear();
-      var tempMonth = timeObject.getMonth() + 1;
-      var tempDay = timeObject.getDate();
+      const tempMonth = timeObject.getMonth() + 1;
+      const tempDay = timeObject.getDate();
       scores.state.dateObject.month =
         tempMonth > 9 ? tempMonth : "".concat(0, tempMonth);
       //console.log("Month is: " + scores.state.dateObject.month + "TempDay is: " + tempDay)
@@ -162,7 +139,7 @@ var scores = {
   }
 };
 
-var teamInfo = {
+const teamInfo = {
 	state: {
 		teamArray: [
 			{ "name": "Yankees", "startingIndex": 0, "endingIndex": 9, "starting": true },
@@ -219,15 +196,15 @@ var teamInfo = {
 			teamInfo.state.teamArray[team3Object.homeTeamIndex].endingIndex -= 1
 		}
 	}
-}
+};
 
-var store = new Vuex.Store ({
+const store = new Vuex.Store ({
 	modules: {
 		score: scores,
 		team: teamInfo
 	}
-})
-//To Call in another app, import then store.state && 
+});
+//To Call in another app, import then store.state &&
 //v-for data in your new computed function & tag {{data.message}}
 
 //store.state.entry.data --> how to call in another componenet, like App.vue

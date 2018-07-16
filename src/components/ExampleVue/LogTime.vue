@@ -43,10 +43,10 @@ import TimeEntries from './TimeEntries.vue'
 		},
 		methods: {
 			save() {
-				let timeEntry = this.timeEntry
+				let timeEntry = this.timeEntry;
 				//We dispatch the timeEntry so it can be pushed
 				//onto the timeEntries array in the parent component
-				store.commit('saveEntry', timeEntry)
+				store.commit('saveEntry', timeEntry);
 				//TimeEntries.$trigger('timeUpdate', [timeEntry])
 				this.timeEntry = {}
 			}
