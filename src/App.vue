@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     updateMessage(message) {
-      var message2 = " \n" + "3rd message"
+      const message2 = " \n" + "3rd message";
       store.commit('updateState', message2)
     }
   }
