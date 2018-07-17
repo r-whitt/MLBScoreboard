@@ -1,11 +1,8 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-import dailyScores from './components/dailyScores.vue'
-//import score from './js/mlbApp/score.js'
-Vue.use(VueResource);
 
-//import mlb from './js/mlbApp/app.js'
+Vue.use(VueResource);
 
 Vue.use(Vuex);
 
@@ -35,7 +32,7 @@ const scores = {
     }
   },
   mutations: {
-    udpateState(store, message) {
+    updateState(store, message) {
       scores.state.message += message;
     },
     updateURL () {
@@ -57,7 +54,6 @@ const scores = {
     updateScoreboardNew(store) {
       scores.state.loading = true;
       scores.mutations.updateURL();
-      //console.log("URL is: " + scores.state.scoresURL);
       let previousRequest = "";
       Vue.http
         .get(scores.state.scoresURL, {
@@ -67,14 +63,10 @@ const scores = {
               console.log("ABORTED previous request");
             }
             previousRequest = JSON.stringify(request);
-            //console.log("previousRequest: " + previousRequest.length)
           }
         })
         .then(
           response => {
-            //console.log("url: " + scores.state.scoresURL);
-            //console.log("url: " + url + "\n" + "response is: " + JSON.stringify(response.body))
-            //	console.log("in store then " + JSON.stringify(response.body.data.games))
             if (!response.body.data.games.game) {
               scores.state.noGame = true;
             } else if (response.body.data.games.game.length > 1) {
@@ -83,13 +75,11 @@ const scores = {
               response.body.data.games.game.series === "MLB All-Star Game"
             ) {
               scores.state.allStarScore = response.body.data.games;
-              //console.log("store state all star: " + JSON.stringify(scores.state.allStarScore[0].game.description));
             } else {
               console.log("Store no UpdateScoreBoardNew didn't return a case");
             }
           },
           response => {
-            //scores.state.loading = false;
             console.log(
               "vue resource had an error: " + scores.state.scoresURL + "\n" + "response is: " + JSON.stringify(response)
             );
@@ -113,19 +103,14 @@ const scores = {
       scores.state.noGame = false;
     },
     updateDatePicker(store, timeObject) {
-      //Used with the Datepicker v:on=closed
       scores.state.dateObject.full = timeObject
       scores.state.dateObject.year = timeObject.getFullYear();
       const tempMonth = timeObject.getMonth() + 1;
       const tempDay = timeObject.getDate();
       scores.state.dateObject.month =
         tempMonth > 9 ? tempMonth : "".concat(0, tempMonth);
-      //console.log("Month is: " + scores.state.dateObject.month + "TempDay is: " + tempDay)
       scores.state.dateObject.day =
         tempDay > 9 ? tempDay : "".concat(0, tempDay);
-      //console.log("Day is: " + scores.state.dateObject.day + "tempDay is: " + tempDay)
-      //console.log("Store date: " + scores.state.dateObject.month + "\ " + scores.state.dateObject.day + "\ " + scores.state.dateObject.year)
-      //console.log("datePicker about to fetch new scores")
       scores.mutations.resetTeamIndexes();
       scores.mutations.clearScores();
       scores.mutations.updateScoreboardNew();
@@ -204,8 +189,5 @@ const store = new Vuex.Store ({
 		team: teamInfo
 	}
 });
-//To Call in another app, import then store.state &&
-//v-for data in your new computed function & tag {{data.message}}
 
-//store.state.entry.data --> how to call in another componenet, like App.vue
 export default store
