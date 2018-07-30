@@ -2,92 +2,60 @@
   <div id="wrapper">
     <nav id="nav" class="navbar navbar-default">
       <div class="container">
-        <router-link class="navbar-brand" id="navText" to="/scores">
+        <router-link class="navbar-brand navText" to="/scores">
           <i class="glyphicon glyphicon-dashboard"></i>
           MLB Test
         </router-link>
         <ul class="nav navbar-nav">
-          <!-- THIS IS DEPRECIATED IN VUE-ROUTER 2
-          <li><a v-link="'/home'">Home</a></li>
-          <li><a v-link="'/time-entries'">Time Entries</a></li>
-          -->
-          <li><router-link id="navText" to="/scores">Scores</router-link></li>
-          <li><router-link id="navText" to="/schedule">Schedule</router-link></li>
+          <li>
+            <router-link class="navText" to="/scores">
+              Scores
+            </router-link>
+          </li>
+          <li>
+            <router-link class="navText" to="/schedule">
+              Schedule
+            </router-link>
+          </li>
         </ul>
       </div>
     </nav>
-    <!--
-    <div v-for="data in getStoreTest">{{ data.message }}</div>
-    <div><button class="btn btn-xs btn-danger" @click="updateMessage()">Update Message</button></div>
-	-->
     <div id="mainPage">
       <div class="container-fluid">
-        <!-- REPLACED BY MAKING DAILYSCORES.VUE HOME IN MAIN.JS
-          <dailyScores></dailyScores>-->
       </div>
       <router-view/>
     </div>
   </div>
 </template>
 
-<script>
-  import store from './store.js'
-  import dailyScores from './components/dailyScores.vue'
-  import schedule from './components/schedule.vue'
-  import loadingSpinner from './components/loadingSpinner.vue'
-
-export default {
-  name: 'app',
-  components: {
-    dailyScores,
-    schedule,
-    loadingSpinner
-  },
-  data: {
-    message: ""
-  },
-  computed: {
-    getStoreTest() {
-      return store.state
-    }
-  },
-  methods: {
-    updateMessage(message) {
-      const message2 = " \n" + "3rd message";
-      store.commit('updateState', message2)
-    }
-  }
-}
-</script>
-
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-#nav {
-  background-color: #221faf;
-  height: 60px;
-  border: 0px;
-  border-radius: 0px;
-  margin-bottom: 0px;
-}
-i {
-  color: white;
-}
-li:hover {
-  height: 60px;
-  opacity: 0.75;
-}
-#navText {
-  color: white;
-  font-family: Arial;
-}
-#mainPage {
-  background-color: #d6d6d6;
-}
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
+  #nav {
+    background-color: #221faf;
+    height: 60px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+  i {
+    color: white;
+  }
+  li:hover {
+    height: 60px;
+    opacity: 0.75;
+  }
+  .navText {
+    color: white;
+    font-family: Arial, "Times New Roman", serif;
+  }
+  #mainPage {
+    background-color: #d6d6d6;
+  }
 </style>
